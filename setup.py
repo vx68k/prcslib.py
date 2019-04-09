@@ -29,7 +29,7 @@ from setuptools import setup, find_packages
 if __name__ == "__main__":
     setup(
         name="prcslib",
-        version="1.0a1",
+        version="1.0b1",
         url="https://vx68k.bitbucket.io/prcslib-python/",
         author="Kaz Nishimura",
         author_email="kazssym@vx68k.org",
