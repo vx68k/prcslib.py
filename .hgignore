@@ -2,6 +2,7 @@ syntax: regexp
 (^|/)dist$
 (^|/)build$
 \.egg-info$
+\.pyc$
 \.rej$
 \.orig$
 ~$
