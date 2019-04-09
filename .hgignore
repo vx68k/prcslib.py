@@ -1,0 +1,7 @@
+syntax: regexp
+(^|/)dist$
+(^|/)build$
+\.egg-info$
+\.rej$
+\.orig$
+~$
