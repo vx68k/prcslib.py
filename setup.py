@@ -1,4 +1,4 @@
-# setup.py - setup script for prcslib
+# setup - setup script for the prcslib package
 # Copyright (C) 2019 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,17 +21,21 @@
 #
 # SPDX-License-Identifier: MIT
 
+"""setup script for the prcslib package.
+"""
+
 from setuptools import setup, find_packages
 
-setup(
-    name="prcslib",
-    version="1.0a1",
-    url="https://vx68k.bitbucket.io/prcslib-python/",
-    author="Kaz Nishimura",
-    author_email="kazssym@vx68k.org",
-    license="MIT",
-    description="Python API for Package Revision Control System (PRCS).",
-    obsoletes=["prcs2hg (< 2.0)"],
+if __name__ == "__main__":
+    setup(
+        name="prcslib",
+        version="1.0a1",
+        url="https://vx68k.bitbucket.io/prcslib-python/",
+        author="Kaz Nishimura",
+        author_email="kazssym@vx68k.org",
+        license="MIT",
+        description="Python API for Package Revision Control System (PRCS).",
+        obsoletes=["prcs2hg (< 2.0)"],
 
-    packages=find_packages(),
-)
+        packages=find_packages(),
+    )
