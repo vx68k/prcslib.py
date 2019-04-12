@@ -35,7 +35,7 @@ from subprocess import Popen, PIPE
 from . import sexpdata
 
 # Regular expression pattern for splitting versions.
-_VERSION_RE = re.compile(r"^(.*)\.(\d+)$")
+_VERSION_PATTERN = re.compile(r"^(.*)\.(\d+)$")
 
 class PrcsError(Exception):
     """Base exception class for the prcslib package."""
@@ -54,7 +54,7 @@ class PrcsVersion(object):
 
     def __init__(self, major, minor=None):
         if minor is None:
-            m = _VERSION_RE.match(major)
+            m = _VERSION_PATTERN.match(major)
             major, minor = m.groups()
 
         self.major = major
