@@ -104,7 +104,7 @@ class PrcsProject(object):
             args.extend(["-r", revision])
         args.append(self.name)
         args.extend(files)
-        out, err = self._run_prcs(args)
+        __, err = self._run_prcs(args)
         if err:
             sys.stderr.write(err)
 
