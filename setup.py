@@ -21,7 +21,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""setup script for the prcslib package.
+"""setup script for the prcslib package
 """
 
 from os import getenv
