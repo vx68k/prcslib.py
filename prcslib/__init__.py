@@ -72,7 +72,7 @@ class PrcsProject(object):
             r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
 
     def revisions(self):
-        out, err = self._run_prcs(["info", "-f", self.name]);
+        out, err = self._run_prcs(["info", "-f", self.name])
 
         revisions = {}
         if (not err):
