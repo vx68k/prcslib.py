@@ -94,8 +94,8 @@ class PrcsProject(object):
             raise PrcsCommandError(err)
         return revisions
 
-    def descriptor(self, id = None):
-        return PrcsDescriptor(self, id)
+    def descriptor(self, version=None):
+        return PrcsDescriptor(self, version)
 
     def checkout(self, revision = None, files = []):
         args = ["checkout", "-fqu"]
