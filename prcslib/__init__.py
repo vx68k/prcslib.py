@@ -1,6 +1,5 @@
-#
-# prcslib/__init__.py - command interface package for PRCS
-# Copyright (C) 2012-2015 Kaz Nishimura
+# prcslib - Python API for Project Revision Control System (PRCS)
+# Copyright (C) 2012-2019 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to
@@ -20,8 +19,9 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 #
+# SPDX-License-Identifier: MIT
 
-"""provide command line interface to PRCS
+"""Python API for Project Revision Control System (PRCS).
 """
 
 import sys
