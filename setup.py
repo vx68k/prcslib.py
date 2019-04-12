@@ -27,7 +27,7 @@
 from os import getenv
 from setuptools import setup, find_packages
 
-def versionsuffix():
+def version_suffix():
     """Returns the version suffix."""
     value = "b2"
     build = getenv("BITBUCKET_BUILD_NUMBER")
@@ -38,7 +38,7 @@ def versionsuffix():
 if __name__ == "__main__":
     setup(
         name="prcslib",
-        version="1.0" + versionsuffix(),
+        version="1.0" + version_suffix(),
         description="Python API for Project Revision Control System (PRCS).",
         url="https://vx68k.bitbucket.io/prcslib-python/",
         author="Kaz Nishimura",
