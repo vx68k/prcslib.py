@@ -30,11 +30,15 @@ if __name__ == "__main__":
     setup(
         name="prcslib",
         version="1.0b1",
+        description="Python API for Package Revision Control System (PRCS).",
         url="https://vx68k.bitbucket.io/prcslib-python/",
         author="Kaz Nishimura",
         author_email="kazssym@vx68k.org",
-        license="MIT",
-        description="Python API for Package Revision Control System (PRCS).",
+        classifiers=[
+            "License :: OSI Approved :: MIT License",
+            "Programming Language :: Python :: 2.7",
+            "Programming Language :: Python :: 3",
+        ],
         obsoletes=["prcs2hg (< 2.0)"],
 
         packages=find_packages(),
