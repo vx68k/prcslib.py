@@ -24,12 +24,21 @@
 """setup script for the prcslib package.
 """
 
+from os import getenv
 from setuptools import setup, find_packages
+
+def versionsuffix():
+    """Returns the version suffix."""
+    value = "b2"
+    build = getenv("BITBUCKET_BUILD_NUMBER")
+    if build is not None:
+        value = ".dev" + build
+    return value
 
 if __name__ == "__main__":
     setup(
         name="prcslib",
-        version="1.0b1",
+        version="1.0" + versionsuffix(),
         description="Python API for Project Revision Control System (PRCS).",
         url="https://vx68k.bitbucket.io/prcslib-python/",
         author="Kaz Nishimura",
