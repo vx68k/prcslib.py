@@ -69,7 +69,7 @@ class PrcsProject(object):
         """construct a Project object."""
         self.name = name
         self.info_re = re.compile(
-                "^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
+            r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
 
     def revisions(self):
         out, err = self._run_prcs(["info", "-f", self.name]);
