@@ -9,4 +9,6 @@
 ---
 inspecode:
   misspell: {}
-  pylint: {}
+  pylint:
+    ignore:
+      - "**/sexpdata.py"
