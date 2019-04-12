@@ -30,7 +30,7 @@ import os
 from datetime import datetime
 from email.utils import parsedate
 from subprocess import Popen, PIPE
-import prcslib.sexpdata as sexpdata
+from . import sexpdata
 
 # Regular expression pattern for splitting versions.
 _VERSION_RE = re.compile(r"^(.*)\.(\d+)$")
