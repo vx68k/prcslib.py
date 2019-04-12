@@ -38,7 +38,7 @@ from . import sexpdata
 _VERSION_RE = re.compile(r"^(.*)\.(\d+)$")
 
 class PrcsError(Exception):
-    """Base exception for this module."""
+    """Base exception class for the prcslib package."""
     pass
 
 class PrcsCommandError(PrcsError):
