@@ -117,9 +117,9 @@ class PrcsProject(object):
 
 class PrcsDescriptor(object):
 
-    def __init__(self, project, id = None):
+    def __init__(self, project, version=None):
         prj_name = project.name + ".prj"
-        project.checkout(id, [prj_name])
+        project.checkout(version, [prj_name])
         self.properties = _readdescriptor(prj_name)
         os.unlink(prj_name)
 
