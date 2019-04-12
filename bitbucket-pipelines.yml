@@ -12,5 +12,7 @@ image: python:3
 pipelines:
   default:
     - step:
+        caches:
+          - pip
         script:
           - python ./setup.py test
