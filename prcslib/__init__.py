@@ -22,6 +22,8 @@
 # SPDX-License-Identifier: MIT
 
 """Python API for Project Revision Control System (PRCS).
+
+PRCS is a legacy version control system, which works on a set of files at once.
 """
 
 import sys
