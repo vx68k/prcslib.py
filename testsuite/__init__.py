@@ -1,4 +1,4 @@
-# setup - setup script for the prcslib package
+# testsuite - test suite for the prcslib package
 # Copyright (C) 2019 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,35 +21,5 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""setup script for the prcslib package
+"""test suite for the prcslib package
 """
-
-from os import getenv
-from setuptools import setup, find_packages
-
-def version_suffix():
-    """Returns the version suffix."""
-    value = "b2"
-    build = getenv("BITBUCKET_BUILD_NUMBER")
-    if build is not None:
-        value = ".dev" + build
-    return value
-
-if __name__ == "__main__":
-    setup(
-        name="prcslib",
-        version="1.0" + version_suffix(),
-        description="Python API for Project Revision Control System (PRCS).",
-        url="https://vx68k.bitbucket.io/prcslib-python/",
-        author="Kaz Nishimura",
-        author_email="kazssym@vx68k.org",
-        classifiers=[
-            "License :: OSI Approved :: MIT License",
-            "Programming Language :: Python :: 2.7",
-            "Programming Language :: Python :: 3",
-        ],
-        obsoletes=["prcs2hg (< 2.0)"],
-
-        packages=find_packages(exclude=["testsuite", "testsuite.*"]),
-        test_suite="testsuite",
-    )
