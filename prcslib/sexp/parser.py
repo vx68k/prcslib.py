@@ -26,6 +26,7 @@
 
 class SExpParser(object):
     """S-expression parser.
+    This class implements the iterator protocol.
     """
 
     def __init__(self, stream):
