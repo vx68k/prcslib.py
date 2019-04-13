@@ -97,12 +97,14 @@ class PrcsProject(object):
     def descriptor(self, version=None):
         return PrcsDescriptor(self, version)
 
-    def checkout(self, revision = None, files = []):
+    def checkout(self, version=None, files=None):
+        if files is None:
+            files = []
         args = ["checkout", "-fqu"]
-        if not files:
+        if version is not None:
+            args.extend(["-r", version])
+        if files != []:
             args.append("-P")
-        if revision is not None:
-            args.extend(["-r", revision])
         args.append(self.name)
         args.extend(files)
         __, err = self._run_prcs(args)
