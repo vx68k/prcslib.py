@@ -17,3 +17,6 @@ pipelines:
         script:
           - pip install setuptools
           - python ./setup.py test
+  branches:
+    # Overrides the default pipeline.
+    deployment: []
