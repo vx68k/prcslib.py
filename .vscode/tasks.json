@@ -11,6 +11,12 @@
             }
         },
         {
+            "label": "clean",
+            "type": "shell",
+            "command": "${config:python.pythonPath} ./setup.py clean",
+            "group": "build"
+        },
+        {
             "label": "test",
             "type": "shell",
             "command": "${config:python.pythonPath} ./setup.py test",
