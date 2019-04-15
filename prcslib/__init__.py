@@ -86,7 +86,7 @@ class PrcsProject(object):
             r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
 
     def revisions(self):
-        out, err = self._run_prcs("info", "-f", self.name)
+        out, err = self._run_prcs(None, "info", "-f", self.name)
 
         revisions = {}
         if not err:
@@ -120,11 +120,11 @@ class PrcsProject(object):
             args.append("-P")
         args.append(self.name)
         args.extend(files)
-        __, err = self._run_prcs(*args)
+        __, err = self._run_prcs(None, *args)
         if err:
             sys.stderr.write(err)
 
-    def _run_prcs(self, *args, stdin=None):
+    def _run_prcs(self, stdin, *args):
         """run a PRCS command as a subprocess
         """
         prcs = Popen(["prcs"] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
