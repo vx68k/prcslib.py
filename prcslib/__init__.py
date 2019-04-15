@@ -76,6 +76,8 @@ class PrcsVersion(object):
         return self._minor
 
 class PrcsProject(object):
+    """project on PRCS
+    """
 
     def __init__(self, name):
         """construct a Project object."""
