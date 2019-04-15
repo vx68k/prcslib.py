@@ -51,18 +51,19 @@ class PrcsCommandError(PrcsError):
         self.error_message = error_message
 
 class PrcsVersion(object):
-    """Version identifier of PRCS."""
+    """version identifier on PRCS
+    """
 
     def __init__(self, major, minor=None):
         if minor is None:
-            m = _VERSION_PATTERN.match(major)
-            major, minor = m.groups()
+            match = _VERSION_PATTERN.match(major)
+            major, minor = match.groups()
 
-        self.major = major
-        self.minor = int(minor)
+        self._major = major
+        self._minor = int(minor)
 
     def __str__(self):
-        return self.major + "." + str(self.minor)
+        return self._major + "." + str(self._minor)
 
 class PrcsProject(object):
 
