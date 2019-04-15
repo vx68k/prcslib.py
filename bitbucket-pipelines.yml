@@ -15,7 +15,7 @@ pipelines:
         caches:
           - pip
         script:
-          - pip install setuptools
+          - pip install setuptools twine
           - python ./setup.py test
   branches:
     # Overrides the default pipeline.
