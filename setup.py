@@ -45,11 +45,11 @@ if __name__ == "__main__":
         author_email="kazssym@vx68k.org",
         classifiers=[
             "License :: OSI Approved :: MIT License",
-            "Programming Language :: Python :: 2.7",
             "Programming Language :: Python :: 3",
         ],
         obsoletes=["prcs2hg (< 2.0)"],
 
+        python_requires=">= 3",
         packages=find_packages(exclude=["testsuite", "testsuite.*"]),
         test_suite="testsuite",
     )
