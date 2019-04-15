@@ -76,11 +76,11 @@ class PrcsProject(object):
         out, err = self._run_prcs(["info", "-f", self.name])
 
         revisions = {}
-        if (not err):
+        if not err:
             # We use iteration over lines so that we can detect parse errors.
             for line in out.splitlines():
                 m = self.info_re.search(line)
-                if (m):
+                if m:
                     # The prcs info command always returns the local time.
                     date = parsedate(m.group(3))
                     revisions[m.group(2)] = {
