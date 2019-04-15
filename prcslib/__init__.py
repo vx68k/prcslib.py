@@ -65,6 +65,16 @@ class PrcsVersion(object):
     def __str__(self):
         return self._major + "." + str(self._minor)
 
+    def major(self):
+        """major version
+        """
+        return self._major
+
+    def minor(self):
+        """minor version
+        """
+        return self._minor
+
 class PrcsProject(object):
 
     def __init__(self, name):
