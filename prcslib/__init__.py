@@ -111,11 +111,11 @@ class PrcsProject(object):
         if err:
             sys.stderr.write(err)
 
-    def _run_prcs(self, args, input = None):
-        """run a PRCS subprocess."""
-        prcs = Popen(["prcs"] + args, stdin = PIPE, stdout = PIPE,
-                stderr = PIPE)
-        return prcs.communicate(input)
+    def _run_prcs(self, args, stdin=None):
+        """run a PRCS command as a subprocess
+        """
+        prcs = Popen(["prcs"] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        return prcs.communicate(stdin)
 
 class PrcsDescriptor(object):
 
