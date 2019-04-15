@@ -8,6 +8,9 @@
 # See <https://inspecode.rocro.com/help/configuration.html> for details.
 ---
 inspecode:
+  experimental:
+    runtime:
+      python: "3.6"
   misspell: {}
   pylint:
     ignore:
