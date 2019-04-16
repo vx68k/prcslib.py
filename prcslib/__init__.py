@@ -81,6 +81,7 @@ class PrcsProject(object):
 
     def __init__(self, name):
         """construct a Project object."""
+        self._command = "prcs"
         self.name = name
         self.info_re = re.compile(
             r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
@@ -127,7 +128,8 @@ class PrcsProject(object):
     def _run_prcs(self, *args, stdin=None):
         """run a PRCS command as a subprocess
         """
-        prcs = Popen(["prcs"] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        prcs = Popen(
+            [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         return prcs.communicate(stdin)
 
 class PrcsDescriptor(object):
