@@ -19,4 +19,7 @@ pipelines:
           - python ./setup.py test
   branches:
     # Overrides the default pipeline.
-    deployment: []
+    deployment:
+      - step:
+          script: []
+
