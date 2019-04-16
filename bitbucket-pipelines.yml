@@ -33,7 +33,6 @@ pipelines:
                 PYPI_USERNAME: $TESTPYPI_USERNAME
                 PYPI_PASSWORD: $TESTPYPI_PASSWORD
                 REPOSITORY: https://test.pypi.org/legacy/
-                DISTRIBUTIONS: sdist bdist_wheel
     deployment/staging:
       - step:
           deployment: staging
