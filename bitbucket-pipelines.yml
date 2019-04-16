@@ -30,8 +30,8 @@ pipelines:
           script:
             - pipe: atlassian/pypi-publish:0.2.4
               variables:
-                PYPI_USERNAME: $PYPI_USERNAME
-                PYPI_PASSWORD: $PYPI_PASSWORD
+                PYPI_USERNAME: $TESTPYPI_USERNAME
+                PYPI_PASSWORD: $TESTPYPI_PASSWORD
                 REPOSITORY: https://test.pypi.org/legacy/
                 DISTRIBUTIONS: sdist bdist_wheel
     deployment/staging:
