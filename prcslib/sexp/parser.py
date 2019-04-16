@@ -22,10 +22,13 @@
 # SPDX-License-Identifier: MIT
 
 """S-expression parser implementation
+
+This module provides a simple stream parser class for S-expressions.
 """
 
 class SExpParser(object):
-    """S-expression parser.
+    """stream parser for S-expressions
+
     This class implements the iterator protocol.
     """
 
@@ -33,12 +36,14 @@ class SExpParser(object):
         self._stream = stream
 
     def __iter__(self):
-        """Returns self."""
+        """return self
+        """
         return self
 
     def __next__(self):
         raise StopIteration()
 
     def next(self):
-        """Returns __next__() for backward compatibility."""
+        """return __next__() for backward compatibility
+        """
         return self.__next__()
