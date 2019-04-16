@@ -23,4 +23,24 @@ pipelines:
       - step:
           script:
             - ": nothing"
-
+  bookmarks:
+    deployment/*:
+      - step:
+          deployment: test
+        caches:
+          - pip
+        script:
+          - pip install setuptools twine
+          - python ./setup.py sdist bdist_wheel
+        artifacts:
+          - dist/*
+    deployment/staging:
+      - step:
+          deployment: staging
+        caches:
+          - pip
+        script:
+          - pip install setuptools twine
+          - python ./setup.py sdist bdist_wheel
+        artifacts:
+          - dist/*
