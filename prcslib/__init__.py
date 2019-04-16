@@ -1,4 +1,4 @@
-# prcslib - Python API for Project Revision Control System (PRCS)
+# prcslib - Python API for PRCS
 # Copyright (C) 2012-2019 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,10 +21,11 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""Python API for Project Revision Control System (PRCS)
+"""Python API for PRCS
 
-This package provides an API for Project Revision Control System (PRCS).
-PRCS is a legacy version control system which works on a set of files at once.
+This package provides an API for PRCS (Project Revision Control System).
+PRCS is a legacy version control system which works on a set of files at
+once.
 """
 
 import sys
