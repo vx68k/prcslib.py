@@ -39,7 +39,7 @@ if __name__ == "__main__":
     setup(
         name="prcslib",
         version="1.0" + version_suffix(),
-        description="Python API for Project Revision Control System (PRCS).",
+        description="Python API for PRCS.",
         url="https://vx68k.bitbucket.io/prcslib-python/",
         author="Kaz Nishimura",
         author_email="kazssym@vx68k.org",
