@@ -21,5 +21,6 @@ pipelines:
     # Overrides the default pipeline.
     deployment:
       - step:
-          script: []
+          script:
+            - ": nothing"
 
