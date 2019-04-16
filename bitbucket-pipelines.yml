@@ -27,13 +27,12 @@ pipelines:
     deployment/*:
       - step:
           deployment: test
-          caches:
-            - pip
           script:
-            - pip install setuptools twine
-            - python ./setup.py sdist bdist_wheel
-          artifacts:
-            - dist/*
+            - pipe: atlassian/pypi-publish:0.2.4
+              variables:
+                PYPI_USERNAME: $TESTPYPI_USERNAME
+                PYPI_PASSWORD: $TESTPYPI_PASSWORD
+                REPOSITORY: https://test.pypi.org/legacy/
     deployment/staging:
       - step:
           deployment: staging
