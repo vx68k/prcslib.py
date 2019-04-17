@@ -17,6 +17,14 @@ definitions:
         script:
           - pip install setuptools
           - python ./setup.py test
+    - step: &deploy-pypi
+        name: PyPI deployment step
+        deployment: production
+        script:
+          - pipe: atlassian/pypi-publish:0.2.4
+            variables:
+              PYPI_USERNAME: $PYPI_USERNAME
+              PYPI_PASSWORD: $PYPI_PASSWORD
     - step: &deploy-testpypi
         name: TestPyPI deployment step
         deployment: test
@@ -41,11 +49,5 @@ pipelines:
       - step: *deploy-testpypi
     deployment/staging:
       - step:
+          <<: *deploy-pypi
           deployment: staging
-          caches:
-            - pip
-          script:
-            - pip install setuptools twine
-            - python ./setup.py sdist bdist_wheel
-          artifacts:
-            - dist/*
