@@ -24,7 +24,7 @@
 """setup script for the prcslib package
 """
 
-from os import getenv
+from os import getenv, path
 from setuptools import setup, find_packages
 
 def version_suffix():
@@ -35,6 +35,18 @@ def version_suffix():
         value = ".dev" + build
     return value
 
+def long_description():
+    """return the long description from the 'README.md' file
+    """
+    cwd = path.abspath(path.dirname(__file__))
+    with open(path.join(cwd, "README.md"), encoding="UTF-8") as file:
+        # To ignore lines until a level-1 ATX header is found.
+        while True:
+            line = file.readline()
+            if line.startswith("# "):
+                break
+        return line + file.read()
+
 if __name__ == "__main__":
     setup(
         name="prcslib",
@@ -43,6 +55,8 @@ if __name__ == "__main__":
         url="https://vx68k.bitbucket.io/prcslib-python/",
         author="Kaz Nishimura",
         author_email="kazssym@vx68k.org",
+        long_description=long_description(),
+        long_description_content_type="text/markdown",
         classifiers=[
             "License :: OSI Approved :: MIT License",
             "Programming Language :: Python :: 3",
