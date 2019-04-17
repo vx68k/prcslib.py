@@ -11,14 +11,14 @@
 definitions:
   steps:
     - step: &test
-        name: Test step
+        name: Test
         caches:
           - pip
         script:
           - pip install setuptools
           - python ./setup.py test
     - step: &deploy-pypi
-        name: PyPI deployment step
+        name: PyPI deployment
         deployment: production
         script:
           - pipe: atlassian/pypi-publish:0.2.4
@@ -26,7 +26,7 @@ definitions:
               PYPI_USERNAME: $PYPI_USERNAME
               PYPI_PASSWORD: $PYPI_PASSWORD
     - step: &deploy-testpypi
-        name: TestPyPI deployment step
+        name: TestPyPI deployment
         deployment: test
         script:
           - pipe: atlassian/pypi-publish:0.2.4
