@@ -43,3 +43,12 @@ pipelines:
             - python ./setup.py sdist bdist_wheel
           artifacts:
             - dist/*
+definitions:
+  steps:
+    - step: &test
+        name: Test step
+        caches:
+          - pip
+        script:
+          - pip install setuptools
+          - python ./setup.py test
