@@ -22,10 +22,11 @@ pipelines:
   default:
     - step: *test
   branches:
+    # Overrides the default pipeline.
     deployment:
       - step:
-          <<: *test
-          trigger: manual
+          script:
+            - ": nothing"
   bookmarks:
     deployment/*:
       - step:
