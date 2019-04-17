@@ -28,7 +28,8 @@ from os import getenv, path
 from setuptools import setup, find_packages
 
 def version_suffix():
-    """Returns the version suffix."""
+    """returns the version suffix
+    """
     value = "b2"
     build = getenv("BITBUCKET_BUILD_NUMBER")
     if build is not None:
