@@ -17,6 +17,15 @@ definitions:
         script:
           - pip install setuptools
           - python ./setup.py test
+    - step: &deploy-testpypi
+        name: TestPyPI deployment step
+        deployment: test
+        script:
+          - pipe: atlassian/pypi-publish:0.2.4
+            variables:
+              PYPI_USERNAME: $TESTPYPI_USERNAME
+              PYPI_PASSWORD: $TESTPYPI_PASSWORD
+              REPOSITORY: https://test.pypi.org/legacy/
 image: python:3
 pipelines:
   default:
@@ -29,14 +38,7 @@ pipelines:
             - ": nothing"
   bookmarks:
     deployment/*:
-      - step:
-          deployment: test
-          script:
-            - pipe: atlassian/pypi-publish:0.2.4
-              variables:
-                PYPI_USERNAME: $TESTPYPI_USERNAME
-                PYPI_PASSWORD: $TESTPYPI_PASSWORD
-                REPOSITORY: https://test.pypi.org/legacy/
+      - step: *deploy-testpypi
     deployment/staging:
       - step:
           deployment: staging
