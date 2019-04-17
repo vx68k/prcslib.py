@@ -8,6 +8,15 @@
 # See <https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html>
 # for details.
 ---
+definitions:
+  steps:
+    - step: &test
+        name: Test step
+        caches:
+          - pip
+        script:
+          - pip install setuptools
+          - python ./setup.py test
 image: python:3
 pipelines:
   default:
@@ -43,12 +52,3 @@ pipelines:
             - python ./setup.py sdist bdist_wheel
           artifacts:
             - dist/*
-definitions:
-  steps:
-    - step: &test
-        name: Test step
-        caches:
-          - pip
-        script:
-          - pip install setuptools
-          - python ./setup.py test
