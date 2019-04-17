@@ -20,12 +20,7 @@ definitions:
 image: python:3
 pipelines:
   default:
-    - step:
-        caches:
-          - pip
-        script:
-          - pip install setuptools twine
-          - python ./setup.py test
+    - step: *test
   branches:
     # Overrides the default pipeline.
     deployment:
