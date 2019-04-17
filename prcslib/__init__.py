@@ -1,4 +1,4 @@
-# prcslib - Python API for Project Revision Control System (PRCS)
+# prcslib - Python API for PRCS
 # Copyright (C) 2012-2019 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,10 +21,11 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""Python API for Project Revision Control System (PRCS)
+"""Python API for PRCS
 
-This package provides an API for Project Revision Control System (PRCS).
-PRCS is a legacy version control system which works on a set of files at once.
+This package provides an API for PRCS (Project Revision Control System).
+PRCS is a legacy version control system which works on a set of files at
+once.
 """
 
 import sys
@@ -51,36 +52,50 @@ class PrcsCommandError(PrcsError):
         self.error_message = error_message
 
 class PrcsVersion(object):
-    """Version identifier of PRCS."""
+    """version identifier on PRCS
+    """
 
     def __init__(self, major, minor=None):
         if minor is None:
-            m = _VERSION_PATTERN.match(major)
-            major, minor = m.groups()
+            match = _VERSION_PATTERN.match(major)
+            major, minor = match.groups()
 
-        self.major = major
-        self.minor = int(minor)
+        self._major = major
+        self._minor = int(minor)
 
     def __str__(self):
-        return self.major + "." + str(self.minor)
+        return self._major + "." + str(self._minor)
+
+    def major(self):
+        """major version
+        """
+        return self._major
+
+    def minor(self):
+        """minor version
+        """
+        return self._minor
 
 class PrcsProject(object):
+    """project on PRCS
+    """
 
     def __init__(self, name):
         """construct a Project object."""
+        self._command = "prcs"
         self.name = name
         self.info_re = re.compile(
             r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
 
     def revisions(self):
-        out, err = self._run_prcs(["info", "-f", self.name])
+        out, err = self._run_prcs("info", "-f", self.name)
 
         revisions = {}
-        if (not err):
+        if not err:
             # We use iteration over lines so that we can detect parse errors.
             for line in out.splitlines():
                 m = self.info_re.search(line)
-                if (m):
+                if m:
                     # The prcs info command always returns the local time.
                     date = parsedate(m.group(3))
                     revisions[m.group(2)] = {
@@ -97,23 +112,26 @@ class PrcsProject(object):
     def descriptor(self, version=None):
         return PrcsDescriptor(self, version)
 
-    def checkout(self, revision = None, files = []):
+    def checkout(self, version=None, files=None):
+        if files is None:
+            files = []
         args = ["checkout", "-fqu"]
-        if not files:
+        if version is not None:
+            args.extend(["-r", version])
+        if files != []:
             args.append("-P")
-        if revision is not None:
-            args.extend(["-r", revision])
         args.append(self.name)
         args.extend(files)
-        __, err = self._run_prcs(args)
+        __, err = self._run_prcs(*args)
         if err:
             sys.stderr.write(err)
 
-    def _run_prcs(self, args, input = None):
-        """run a PRCS subprocess."""
-        prcs = Popen(["prcs"] + args, stdin = PIPE, stdout = PIPE,
-                stderr = PIPE)
-        return prcs.communicate(input)
+    def _run_prcs(self, *args, stdin=None):
+        """run a PRCS command as a subprocess
+        """
+        prcs = Popen(
+            [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        return prcs.communicate(stdin)
 
 class PrcsDescriptor(object):
 
