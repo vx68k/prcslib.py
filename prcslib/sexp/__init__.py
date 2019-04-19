@@ -26,7 +26,7 @@
 This package provides a simple API for S-expressions.
 """
 
-from .parser import SExpParser
+from .stream.parser import SExpParser
 
 class SExp(object):
     """Convenience class for static methods."""

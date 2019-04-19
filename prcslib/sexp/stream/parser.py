@@ -1,4 +1,4 @@
-# sexp.parser - S-expression parser implementation
+# sexp.stream.parser - S-expression parser implementation
 # Copyright (C) 2019 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
