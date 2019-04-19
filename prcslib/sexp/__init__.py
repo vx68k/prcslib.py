@@ -35,3 +35,9 @@ class SExp(object):
     def parser(stream):
         """Creates a parser for an input stream."""
         return SExpParser(stream)
+
+    @staticmethod
+    def reader(stream):
+        """create an S-expression reader for an input stream
+        """
+        raise NotImplementedError()
