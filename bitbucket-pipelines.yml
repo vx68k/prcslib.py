@@ -45,9 +45,9 @@ pipelines:
           script:
             - ": nothing"
   bookmarks:
-    deployment/*:
+    deployment/test:
       - step: *deploy-testpypi
     deployment/staging:
       - step:
-          <<: *deploy-pypi
+          <<: *deploy-testpypi
           deployment: staging
