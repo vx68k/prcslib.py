@@ -21,18 +21,20 @@ definitions:
         name: PyPI deployment
         deployment: production
         script:
-          - pipe: atlassian/pypi-publish:0.2.4
+          - pipe: atlassian/pypi-publish:0.2.5
             variables:
               PYPI_USERNAME: $PYPI_USERNAME
               PYPI_PASSWORD: $PYPI_PASSWORD
+              DISTRIBUTIONS: sdist bdist_wheel
     - step: &deploy-testpypi
         name: TestPyPI deployment
         deployment: test
         script:
-          - pipe: atlassian/pypi-publish:0.2.4
+          - pipe: atlassian/pypi-publish:0.2.5
             variables:
               PYPI_USERNAME: $TESTPYPI_USERNAME
               PYPI_PASSWORD: $TESTPYPI_PASSWORD
+              DISTRIBUTIONS: sdist bdist_wheel
               REPOSITORY: https://test.pypi.org/legacy/
 image: python:3
 pipelines:
