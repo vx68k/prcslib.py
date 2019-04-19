@@ -29,11 +29,13 @@ This package provides a simple API for S-expressions.
 from .stream.parser import SExpParser
 
 class SExp(object):
-    """Convenience class for static methods."""
+    """convenience class for static methods
+    """
 
     @staticmethod
     def parser(stream):
-        """Creates a parser for an input stream."""
+        """create an S-expression parser for an input stream
+        """
         return SExpParser(stream)
 
     @staticmethod
