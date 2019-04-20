@@ -40,8 +40,8 @@ from . import sexpdata
 _VERSION_PATTERN = re.compile(r"^(.*)\.(\d+)$")
 
 class PrcsError(Exception):
-    """Base exception class for the prcslib package."""
-    pass
+    """base exception class for the prcslib package
+    """
 
 class PrcsCommandError(PrcsError):
     """Error from the PRCS command."""
@@ -51,7 +51,7 @@ class PrcsCommandError(PrcsError):
         super(PrcsCommandError, self).__init__(self)
         self.error_message = error_message
 
-class PrcsVersion(object):
+class PrcsVersion:
     """version identifier on PRCS
     """
 
@@ -76,7 +76,7 @@ class PrcsVersion(object):
         """
         return self._minor
 
-class PrcsProject(object):
+class PrcsProject:
     """project on PRCS
     """
 
@@ -133,7 +133,7 @@ class PrcsProject(object):
             [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         return prcs.communicate(stdin)
 
-class PrcsDescriptor(object):
+class PrcsDescriptor:
 
     def __init__(self, project, version=None):
         prj_name = project.name + ".prj"
