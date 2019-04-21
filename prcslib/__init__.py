@@ -134,6 +134,8 @@ class PrcsProject:
         return prcs.communicate(stdin)
 
 class PrcsDescriptor:
+    """project descriptor on PRCS
+    """
 
     def __init__(self, project, version=None):
         prj_name = project.name + ".prj"
