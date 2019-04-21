@@ -3,27 +3,39 @@
     "tasks": [
         {
             "label": "build",
-            "type": "shell",
-            "command": "${config:python.pythonPath} ./setup.py build",
+            "type": "process",
+            "command": "${config:python.pythonPath}",
+            "args": [
+                "./setup.py",
+                "build"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
         },
         {
-            "label": "clean",
-            "type": "shell",
-            "command": "${config:python.pythonPath} ./setup.py clean",
-            "group": "build"
-        },
-        {
             "label": "test",
-            "type": "shell",
-            "command": "${config:python.pythonPath} ./setup.py test",
+            "type": "process",
+            "command": "${config:python.pythonPath}",
+            "args": [
+                "./setup.py",
+                "test"
+            ],
             "group": {
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        {
+            "label": "clean",
+            "type": "process",
+            "command": "${config:python.pythonPath}",
+            "args": [
+                "./setup.py",
+                "clean"
+            ],
+            "group": "none"
         }
     ]
 }

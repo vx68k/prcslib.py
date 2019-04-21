@@ -23,9 +23,9 @@
 
 """Python API for PRCS
 
-This package provides an API for PRCS (Project Revision Control System).
-PRCS is a legacy version control system which works on a set of files at
-once.
+This package provides an API for PRCS.
+PRCS (Project Revision Control System) is a legacy version control system
+which works on a set of files at once.
 """
 
 import sys
