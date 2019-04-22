@@ -25,3 +25,27 @@
 
 This package provides a streaming API for S-expressions.
 """
+
+class SExpParserEvent:
+    """S-expression parser event
+    """
+
+    START_LIST = "("
+    END_LIST = ")"
+    QUOTE = "'"
+    VALUE_STRING = "string"
+    VALUE_SYMBOL = "symbol"
+
+    def __init__(self, eventtype, eventvalue=None):
+        self._type = eventtype
+        self._value = eventvalue
+
+    def type(self):
+        """return the type of this event
+        """
+        return self._type
+
+    def value(self):
+        """return the value of this event
+        """
+        return self.value
