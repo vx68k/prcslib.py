@@ -53,7 +53,7 @@ if __name__ == "__main__":
         name="prcslib",
         version="1.0" + version_suffix(),
         description="Python API for PRCS.",
-        url="https://vx68k.bitbucket.io/prcslib-python/",
+        url="https://vx68k.bitbucket.io/prcslib.py/",
         author="Kaz Nishimura",
         author_email="kazssym@vx68k.org",
         long_description=long_description(),
