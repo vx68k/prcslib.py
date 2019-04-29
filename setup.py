@@ -24,16 +24,23 @@
 """setup script for the prcslib package
 """
 
-from os import getenv, path
+from os import path
 from setuptools import setup, find_packages
 
-def version_suffix():
-    """returns the version suffix
+# Set this to 'True' if the current version is a snapshot.
+_SNAPSHOT = True
+
+def _version_suffix():
+    """return the version suffix
+
+    This method returns a string to be appended to the package version,
+    or "" if none needed.
     """
     value = "b2"
-    build = getenv("BITBUCKET_BUILD_NUMBER")
-    if build is not None:
-        value = ".dev" + build
+    if _SNAPSHOT:
+        from datetime import datetime
+        timestamp = datetime.utcnow()
+        value = timestamp.strftime(".dev%Y%m%d%H%M%S")
     return value
 
 def long_description():
@@ -51,7 +58,7 @@ def long_description():
 if __name__ == "__main__":
     setup(
         name="prcslib",
-        version="1.0" + version_suffix(),
+        version="1.0" + _version_suffix(),
         description="Python API for PRCS.",
         url="https://vx68k.bitbucket.io/prcslib.py/",
         author="Kaz Nishimura",
