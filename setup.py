@@ -24,7 +24,7 @@
 """setup script for the prcslib package
 """
 
-from os import getenv, path
+from os import path
 from setuptools import setup, find_packages
 
 # Set this to 'True' if the current version is a snapshot.
