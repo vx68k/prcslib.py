@@ -38,14 +38,9 @@ definitions:
               REPOSITORY: https://test.pypi.org/legacy/
 image: python:3
 pipelines:
-  default:
-    - step: *test
   branches:
-    # Overrides the default pipeline.
-    deployment:
-      - step:
-          script:
-            - ": nothing"
+    default:
+      - step: *test
   bookmarks:
     deployment/test:
       - step: *deploy-testpypi
