@@ -28,7 +28,7 @@ from os import path
 from setuptools import setup, find_packages
 
 # Set this to 'True' if the current version is a snapshot.
-_SNAPSHOT = True
+_SNAPSHOT = False
 
 def _version_suffix():
     """return the version suffix
