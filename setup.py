@@ -36,7 +36,7 @@ def _version_suffix():
     This method returns a string to be appended to the package version,
     or "" if none needed.
     """
-    value = "b2"
+    value = "b3"
     if _SNAPSHOT:
         from datetime import datetime
         timestamp = datetime.utcnow()
