@@ -94,16 +94,16 @@ class PrcsProject:
         if not err:
             # We use iteration over lines so that we can detect parse errors.
             for line in out.splitlines():
-                m = self.info_re.search(line)
-                if m:
+                match = self.info_re.search(line)
+                if match:
                     # The prcs info command always returns the local time.
-                    date = parsedate(m.group(3))
-                    revisions[m.group(2)] = {
-                        "project": m.group(1),
-                        "id": m.group(2),
+                    date = parsedate(match.group(3))
+                    revisions[match.group(2)] = {
+                        "project": match.group(1),
+                        "id": match.group(2),
                         "date": datetime(*date[0:6]),
-                        "author": m.group(4),
-                        "deleted": bool(m.group(5))
+                        "author": match.group(4),
+                        "deleted": bool(match.group(5))
                     }
         else:
             raise PrcsCommandError(err)
