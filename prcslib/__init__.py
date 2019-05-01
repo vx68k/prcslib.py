@@ -87,10 +87,12 @@ class PrcsProject:
         self.info_re = re.compile(
             r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
 
-    def revisions(self):
+    def versions(self):
+        """return a dictionary of the summary records for all the versions
+        """
         out, err = self._run_prcs("info", "-f", self.name)
 
-        revisions = {}
+        versions = {}
         if not err:
             # We use iteration over lines so that we can detect parse errors.
             for line in out.splitlines():
@@ -98,7 +100,7 @@ class PrcsProject:
                 if match:
                     # The prcs info command always returns the local time.
                     date = parsedate(match.group(3))
-                    revisions[match.group(2)] = {
+                    versions[match.group(2)] = {
                         "project": match.group(1),
                         "id": match.group(2),
                         "date": datetime(*date[0:6]),
@@ -107,7 +109,7 @@ class PrcsProject:
                     }
         else:
             raise PrcsCommandError(err)
-        return revisions
+        return versions
 
     def descriptor(self, version=None):
         return PrcsDescriptor(self, version)
