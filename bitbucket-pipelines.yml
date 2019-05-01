@@ -52,3 +52,9 @@ pipelines:
       - step:
           <<: *deploy-pypi
           deployment: staging
+    deployment/production:
+      - step:
+          name: Version check
+          script:
+            - python ./setup.py --version | grep -v '\.dev[0-9]'
+      - step:*deploy-pypi
