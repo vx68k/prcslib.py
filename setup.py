@@ -62,7 +62,7 @@ if __name__ == "__main__":
         description="Python API for PRCS.",
         url="https://vx68k.bitbucket.io/prcslib.py/",
         author="Kaz Nishimura",
-        author_email="kazssym@vx68k.org",
+        author_email="kazssym@linuxfront.com",
         long_description=long_description(),
         long_description_content_type="text/markdown",
         classifiers=[
