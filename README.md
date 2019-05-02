@@ -1,17 +1,21 @@
-This file documents the prcslib package for Python.
+This file documents the `prcslib` package for Python.
 
 # Introduction
 
-The prcslib package provides a Python API for [PRCS][] (Project Revision
-Control System).
-PRCS is a legacy version control system which works on a set of files at once.
+The `prcslib` package provides a *Python API for PRCS*.
+
+[PRCS][] (Project Revision Control System) is a legacy version control system
+that manages a *project* consisting of multiple files
+and records related changes across them as a unit.
 
 [![(License)](https://img.shields.io/badge/license-MIT-blue.svg)][MIT]
-[![(Gitter room)](https://img.shields.io/gitter/room/vx68k/prcslib-python.svg)][Gitter room]
-[![(Open issues)](https://img.shields.io/bitbucket/issues/vx68k/prcslib-python.svg)][open issues]
+[![(PyPI)](https://img.shields.io/pypi/v/prcslib.svg)][PyPI]
+[![(Chat)](https://img.shields.io/gitter/room/vx68k/prcslib.py.svg)][Gitter room]
+[![(Issues)](https://img.shields.io/bitbucket/issues/vx68k/prcslib.py.svg)][open issues]
 
 [PRCS]: http://prcs.sourceforge.net/
 
 [MIT]: https://spdx.org/licenses/MIT.html "MIT License"
-[Gitter room]: https://gitter.im/vx68k/prcslib-python
-[Open issues]: https://bitbucket.org/vx68k/prcslib-python/issues?status=new&status=open
+[PyPI]: https://pypi.org/project/prcslib/
+[Gitter room]: https://gitter.im/vx68k/prcslib.py
+[Open issues]: https://bitbucket.org/vx68k/prcslib.py/issues?status=new&status=open

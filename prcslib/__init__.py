@@ -23,9 +23,9 @@
 
 """Python API for PRCS
 
-This package provides an API for PRCS (Project Revision Control System).
-PRCS is a legacy version control system which works on a set of files at
-once.
+This package provides an API for PRCS.
+PRCS (Project Revision Control System) is a legacy version control system
+which works on a set of files at once.
 """
 
 import sys
@@ -40,8 +40,8 @@ from . import sexpdata
 _VERSION_PATTERN = re.compile(r"^(.*)\.(\d+)$")
 
 class PrcsError(Exception):
-    """Base exception class for the prcslib package."""
-    pass
+    """base exception class for the prcslib package
+    """
 
 class PrcsCommandError(PrcsError):
     """Error from the PRCS command."""
@@ -51,7 +51,7 @@ class PrcsCommandError(PrcsError):
         super(PrcsCommandError, self).__init__(self)
         self.error_message = error_message
 
-class PrcsVersion(object):
+class PrcsVersion:
     """version identifier on PRCS
     """
 
@@ -76,7 +76,7 @@ class PrcsVersion(object):
         """
         return self._minor
 
-class PrcsProject(object):
+class PrcsProject:
     """project on PRCS
     """
 
@@ -87,27 +87,29 @@ class PrcsProject(object):
         self.info_re = re.compile(
             r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
 
-    def revisions(self):
+    def versions(self):
+        """return a dictionary of the summary records for all the versions
+        """
         out, err = self._run_prcs("info", "-f", self.name)
 
-        revisions = {}
+        versions = {}
         if not err:
             # We use iteration over lines so that we can detect parse errors.
             for line in out.splitlines():
-                m = self.info_re.search(line)
-                if m:
+                match = self.info_re.search(line)
+                if match:
                     # The prcs info command always returns the local time.
-                    date = parsedate(m.group(3))
-                    revisions[m.group(2)] = {
-                        "project": m.group(1),
-                        "id": m.group(2),
+                    date = parsedate(match.group(3))
+                    versions[match.group(2)] = {
+                        "project": match.group(1),
+                        "id": match.group(2),
                         "date": datetime(*date[0:6]),
-                        "author": m.group(4),
-                        "deleted": bool(m.group(5))
+                        "author": match.group(4),
+                        "deleted": bool(match.group(5))
                     }
         else:
             raise PrcsCommandError(err)
-        return revisions
+        return versions
 
     def descriptor(self, version=None):
         return PrcsDescriptor(self, version)
@@ -133,7 +135,9 @@ class PrcsProject(object):
             [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         return prcs.communicate(stdin)
 
-class PrcsDescriptor(object):
+class PrcsDescriptor:
+    """project descriptor on PRCS
+    """
 
     def __init__(self, project, version=None):
         prj_name = project.name + ".prj"
