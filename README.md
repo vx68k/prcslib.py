@@ -3,8 +3,10 @@ This file documents the `prcslib` package for Python.
 # Introduction
 
 The `prcslib` package provides a Python API for [PRCS][].
+
 PRCS (Project Revision Control System) is a legacy version control system
-which works on a set of files at once.
+that manages a *project* consisting of multiple files
+and records related changes across them as a unit.
 
 [![(License)](https://img.shields.io/badge/license-MIT-blue.svg)][MIT]
 [![(PyPI)](https://img.shields.io/pypi/v/prcslib.svg)][PyPI]
