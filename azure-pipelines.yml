@@ -36,3 +36,4 @@
             - bash: |
                 twine upload -r prcslib-snapshots --config-file $(PYPIRC_PATH) dist/*
               displayName: Upload
+              condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
