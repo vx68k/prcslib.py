@@ -1,0 +1,38 @@
+# azure-pipelines.yml - configuration for Azure Pipelines
+# Copyright (C) 2020 Kaz Nishimura
+#
+# Copying and distribution of this file, with or without modification, are
+# permitted in any medium without royalty provided the copyright notice and
+# this notice are preserved.  This file is offered as-is, without any warranty.
+---
+  trigger:
+    - master
+    - feature/**
+  stages:
+    - stage: default
+      displayName: Default
+      jobs:
+        - job: build
+          displayName: Build
+          pool:
+            vmImage: ubuntu-16.04
+          steps:
+            - task: UsePythonVersion@0
+            - bash: |
+                pip install "setuptools>=38.6" wheel twine
+              displayName: Install dependencies
+            - bash: |
+                python ./setup.py test
+              displayName: Test
+            - task: PublishTestResults@2
+            - bash: |
+                python ./setup.py sdist bdist_wheel
+              displayName: Create archives
+            - publish: dist
+              artifact: dist
+            - task: TwineAuthenticate@1
+              inputs:
+                artifactFeed: prcslib.py/prcslib-snapshots
+            - bash: |
+                twine upload -r prcslib-snapshots --config-file $(PYPIRC_PATH) dist/*
+              displayName: Upload
