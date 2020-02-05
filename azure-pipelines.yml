@@ -32,7 +32,7 @@
               artifact: dist
             - task: TwineAuthenticate@1
               inputs:
-                artifactFeed: prcslib.py/prcslib-snapshots
+                artifactFeed: $(System.TeamProject)/prcslib-snapshots
             - bash: |
                 twine upload -r prcslib-snapshots --config-file $(PYPIRC_PATH) dist/*
               displayName: Upload
