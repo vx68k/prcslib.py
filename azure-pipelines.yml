@@ -19,7 +19,7 @@
           steps:
             - task: UsePythonVersion@0
             - bash: |
-                pip install "setuptools>=38.6" wheel twine
+                pip install "setuptools>=38.6" wheel
               displayName: Install dependencies
             - bash: |
                 python ./setup.py test
@@ -30,10 +30,27 @@
               displayName: Create archives
             - publish: dist
               artifact: dist
-            - task: TwineAuthenticate@1
-              inputs:
-                artifactFeed: $(System.TeamProject)/prcslib-snapshots
-            - bash: |
-                twine upload -r prcslib-snapshots --config-file $(PYPIRC_PATH) dist/*
-              displayName: Upload
-              condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    - stage: testDeployment
+      displayName: Test deployment
+      dependsOn: default
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+      jobs:
+        - deployment: deploy
+          displayName: Deploy
+          environment: test
+          pool:
+            vmImage: ubuntu-16.04
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                  - task: UsePythonVersion@0
+                  - bash: |
+                      pip install twine
+                    displayName: Install dependencies
+                  - task: TwineAuthenticate@1
+                    inputs:
+                      artifactFeed: $(System.TeamProject)/prcslib-snapshots
+                  - bash: |
+                      twine upload -r prcslib-snapshots --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
+                    displayName: Upload
