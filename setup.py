@@ -1,5 +1,5 @@
 # setup - setup script for the prcslib package
-# Copyright (C) 2019 Kaz Nishimura
+# Copyright (C) 2019-2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to
@@ -47,7 +47,7 @@ def long_description():
     """return the long description from the 'README.md' file
     """
     cwd = path.abspath(path.dirname(__file__))
-    with open(path.join(cwd, "README.md"), encoding="UTF-8") as stream:
+    with open(path.join(cwd, "README.md")) as stream:
         # To ignore lines until a level-1 ATX header is found.
         while True:
             line = stream.readline()
