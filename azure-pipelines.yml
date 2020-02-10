@@ -50,7 +50,7 @@
                     displayName: Install dependencies
                   - task: TwineAuthenticate@1
                     inputs:
-                      artifactFeed: $(System.TeamProject)/prcslib-snapshots
+                      artifactFeed: $(System.TeamProject)/prcslib
                   - bash: |
-                      twine upload -r prcslib-snapshots --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
+                      twine upload -r prcslib --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
                     displayName: Upload
