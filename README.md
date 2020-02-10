@@ -1,6 +1,6 @@
-This file documents the `prcslib` package for Python.
+# READ ME
 
-# Introduction
+## Description
 
 The `prcslib` package provides a *Python API for PRCS*.
 
