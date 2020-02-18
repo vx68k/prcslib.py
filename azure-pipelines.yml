@@ -29,7 +29,7 @@
             - publish: dist
               artifact: dist
     - stage: testDeployment
-      displayName: Test deployment
+      displayName: Test Deployment
       dependsOn: Default
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
       jobs:
@@ -51,8 +51,8 @@
                   - bash: |
                       twine upload -r prcslib --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
                     displayName: Upload
-    - stage: deployment
-      displayName: Production deployment
+    - stage: Deployment
+      displayName: Production Deployment
       dependsOn: testDeployment
       jobs:
         - deployment: Upload
