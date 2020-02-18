@@ -69,7 +69,7 @@
                     displayName: Install dependencies
                   - task: TwineAuthenticate@1
                     inputs:
-                      pythonUploadServiceConnection: pypi-test
+                      pythonUploadServiceConnection: pypi
                   - bash: |
-                      twine upload -r pypi-test --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
+                      twine upload -r pypi --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
                     displayName: Upload
