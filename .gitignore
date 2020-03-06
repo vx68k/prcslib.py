@@ -1,0 +1,8 @@
+**/nbproject/private
+dist
+build
+*.egg-info
+*.pyc
+*.rej
+*.orig
+*~
