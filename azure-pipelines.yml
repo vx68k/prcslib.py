@@ -29,31 +29,7 @@
               displayName: Create archives
             - publish: dist
               artifact: dist
-    - stage: TestUpload
-      displayName: Test Upload
-      dependsOn: Default
-      condition: >-
-        and(succeeded(),
-            eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-      jobs:
-        - job: Upload
-          pool:
-            vmImage: ubuntu-16.04
-          steps:
-            - download: current
-              artifact: dist
-            - task: UsePythonVersion@0
-            - bash: |
-                pip install twine
-              displayName: Install dependencies
-            - task: TwineAuthenticate@1
-              inputs:
-                artifactFeed: $(System.TeamProject)/prcs
-            - bash: |
-                twine upload -r prcs --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
-              displayName: Upload
     - stage: Release
-      dependsOn: Default
       condition: >-
         and(succeeded(),
           startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))
