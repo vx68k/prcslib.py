@@ -1,7 +1,8 @@
 **/nbproject/private
 dist
 build
-*.egg-info
+**/__pycache__/
+**/*.egg-info/
 *.pyc
 *.rej
 *.orig
