@@ -7,6 +7,7 @@
 ---
   trigger:
     - master
+    - release/**
     - feature/**
   stages:
     - stage: Default
@@ -51,25 +52,25 @@
             - bash: |
                 twine upload -r prcs --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
               displayName: Upload
-    - stage: Deployment
-      displayName: Production Deployment
-      dependsOn: TestUpload
+    - stage: Release
+      dependsOn: Default
+      condition: >-
+        and(succeeded(),
+          startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))
       jobs:
-        - deployment: Upload
-          environment: production
+        - job: Upload
+          displayName: Upload to PyPI
           pool:
-            vmImage: ubuntu-16.04
-          strategy:
-            runOnce:
-              deploy:
-                steps:
-                  - task: UsePythonVersion@0
-                  - bash: |
-                      pip install twine
-                    displayName: Install dependencies
-                  - task: TwineAuthenticate@1
-                    inputs:
-                      pythonUploadServiceConnection: pypi
-                  - bash: |
-                      twine upload -r pypi --config-file $(PYPIRC_PATH) $(Pipeline.Workspace)/dist/*
-                    displayName: Upload
+            vmImage: ubuntu-latest
+          steps:
+            - task: UsePythonVersion@0
+            - bash: |
+                pip install twine
+              displayName: Install dependencies
+            - task: TwineAuthenticate@1
+              inputs:
+                pythonUploadServiceConnection: pypi
+            - bash: |
+                twine upload -r pypi --config-file $(PYPIRC_PATH) \
+                    $(Pipeline.Workspace)/dist/*
+              displayName: Upload
