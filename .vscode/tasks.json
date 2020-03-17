@@ -9,10 +9,7 @@
                 "./setup.py",
                 "test"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         },
         {
             "label": "Rebuild",
