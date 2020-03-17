@@ -112,9 +112,15 @@ class PrcsProject:
         return versions
 
     def descriptor(self, version=None):
+        """
+        return the project descriptor for a version
+        """
         return PrcsDescriptor(self, version)
 
     def checkout(self, version=None, files=None):
+        """
+        check out a version
+        """
         if files is None:
             files = []
         args = ["checkout", "-fqu"]
