@@ -27,21 +27,8 @@
 from os import path
 from setuptools import setup, find_packages
 
-# Set this to 'True' if the current version is a snapshot.
-_SNAPSHOT = True
-
-def _version_suffix():
-    """return the version suffix
-
-    This method returns a string to be appended to the package version,
-    or "" if none needed.
-    """
-    value = "b3"
-    if _SNAPSHOT:
-        from datetime import datetime
-        timestamp = datetime.utcnow()
-        value = timestamp.strftime(".dev%Y%m%d%H%M%S")
-    return value
+# Package version.
+PACKAGE_VERSION = "1.0b3"
 
 def long_description():
     """return the long description from the 'README.md' file
@@ -58,7 +45,7 @@ def long_description():
 if __name__ == "__main__":
     setup(
         name="prcslib",
-        version="1.0" + _version_suffix(),
+        version=PACKAGE_VERSION,
         description="Python API for PRCS.",
         url="https://vx68k.bitbucket.io/prcslib.py/",
         author="Kaz Nishimura",
