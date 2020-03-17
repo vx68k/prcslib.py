@@ -90,7 +90,7 @@ class PrcsProject:
     def versions(self):
         """return a dictionary of the summary records for all the versions
         """
-        out, err = self._run_prcs("info", "-f", self.name)
+        out, err = self._run_prcs(["info", "-f", self.name])
 
         versions = {}
         if not err:
@@ -124,13 +124,16 @@ class PrcsProject:
             args.append("-P")
         args.append(self.name)
         args.extend(files)
-        __, err = self._run_prcs(*args)
+        __, err = self._run_prcs(args)
         if err:
             sys.stderr.write(err)
 
-    def _run_prcs(self, *args, stdin=None):
-        """run a PRCS command as a subprocess
+    def _run_prcs(self, args=None, stdin=None):
         """
+        run a PRCS command as a subprocess
+        """
+        if args is None:
+            args = []
         prcs = Popen(
             [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         return prcs.communicate(stdin)
