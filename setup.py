@@ -1,4 +1,4 @@
-# setup - setup script for the prcslib package
+# setup.py - setup script for the 'prcslib' package
 # Copyright (C) 2019-2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,14 +22,14 @@
 # SPDX-License-Identifier: MIT
 
 """
-setup script for the prcslib package
+setup script for the 'prcslib' package
 """
 
 from os import path
 from setuptools import setup, find_packages
 
 # Package version.
-PACKAGE_VERSION = "1.0b3"
+PACKAGE_VERSION = "1.0b4"
 
 def long_description():
     """
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             "Programming Language :: Python :: 3",
         ],
         obsoletes=["prcs2hg (< 2.0)"],
-        python_requires=">= 3.4",
+        python_requires=">=2.7",
 
         packages=find_packages(exclude=["testsuite", "testsuite.*"]),
         test_suite="testsuite",

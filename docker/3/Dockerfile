@@ -13,8 +13,8 @@ apt-get install -q --no-install-recommends rcs && \
 rm -rf /var/lib/apt/lists/*
 
 ARG PRCS_VERSION=1.3.4k2
-ARG PRCS_VERSION_SUFFIX=-snapshot20200306.6
-ARG PRCS_SHA256=6b4d450602e76b7f7dd1df712c6f7536aa1037790a34f08c5fbf8a42b21e0573
+ARG PRCS_VERSION_SUFFIX=-snapshot20200318.1
+ARG PRCS_SHA256=497c67686c70c059622c3cb59fc608b0fc9d76fdb038c5340b175f220c330dd7
 RUN set -x && \
 cd /tmp && \
 curl -OL https://bitbucket.org/kazssym/prcs/downloads/prcs-${PRCS_VERSION}${PRCS_VERSION_SUFFIX}.tar.gz && \
