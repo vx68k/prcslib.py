@@ -29,7 +29,7 @@ from os import path
 from setuptools import setup, find_packages
 
 # Package version.
-PACKAGE_VERSION = "1.0b4"
+PACKAGE_VERSION = "1.0b5"
 
 def long_description():
     """
