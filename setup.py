@@ -1,4 +1,4 @@
-# setup - setup script for the prcslib package
+# setup.py - setup script for the 'prcslib' package
 # Copyright (C) 2019-2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,7 +22,7 @@
 # SPDX-License-Identifier: MIT
 
 """
-setup script for the prcslib package
+setup script for the 'prcslib' package
 """
 
 from os import path
