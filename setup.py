@@ -59,7 +59,7 @@ if __name__ == "__main__":
             "Programming Language :: Python :: 3",
         ],
         obsoletes=["prcs2hg (< 2.0)"],
-        python_requires=">= 3.4",
+        python_requires=">=2.7",
 
         packages=find_packages(exclude=["testsuite", "testsuite.*"]),
         test_suite="testsuite",
