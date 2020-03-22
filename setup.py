@@ -29,7 +29,7 @@ from os import path
 from setuptools import setup, find_packages
 
 # Package version.
-PACKAGE_VERSION = "1.0b4"
+PACKAGE_VERSION = "1.0"
 
 def long_description():
     """
@@ -57,8 +57,10 @@ if __name__ == "__main__":
         classifiers=[
             "License :: OSI Approved :: MIT License",
             "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 2.7",
+            "Topic :: Software Development :: Version Control",
         ],
-        obsoletes=["prcs2hg (< 2.0)"],
+        obsoletes=["prcs2hg(<2.0)"],
         python_requires=">=2.7",
 
         packages=find_packages(exclude=["testsuite", "testsuite.*"]),
