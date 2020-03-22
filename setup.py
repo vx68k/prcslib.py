@@ -57,6 +57,8 @@ if __name__ == "__main__":
         classifiers=[
             "License :: OSI Approved :: MIT License",
             "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 2.7",
+            "Topic :: Software Development :: Version Control",
         ],
         obsoletes=["prcs2hg (< 2.0)"],
         python_requires=">=2.7",
