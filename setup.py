@@ -62,6 +62,7 @@ if __name__ == "__main__":
         ],
         obsoletes=["prcs2hg(<2.0)"],
         python_requires=">=2.7",
+        zip_safe=True,
 
         packages=find_packages(exclude=["testsuite", "testsuite.*"]),
         test_suite="testsuite",
