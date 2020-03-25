@@ -24,7 +24,7 @@ stages:
                   tox
             displayName: Install dependencies
           - bash: |
-              python ./setup.py test
+              tox
             displayName: Test
           - task: PublishTestResults@2
           - bash: |
