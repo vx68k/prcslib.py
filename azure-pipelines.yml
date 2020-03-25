@@ -18,7 +18,10 @@ stages:
         steps:
           - task: UsePythonVersion@0
           - bash: |
-              pip install "setuptools>=38.6" wheel
+              pip install \
+                  "setuptools>=38.6" \
+                  wheel \
+                  tox
             displayName: Install dependencies
           - bash: |
               python ./setup.py test
