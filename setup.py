@@ -29,6 +29,8 @@ from __future__ import absolute_import
 from os import path
 from setuptools import setup, find_packages
 
+# Package name.
+PACKAGE_NAME = "prcslib"
 # Package version.
 PACKAGE_VERSION = "3.0"
 
@@ -47,7 +49,7 @@ def long_description():
 
 if __name__ == "__main__":
     setup(
-        name="prcslib",
+        name=PACKAGE_NAME,
         version=PACKAGE_VERSION,
         description="Python API for PRCS.",
         url="https://vx68k.bitbucket.io/prcslib.py/",
