@@ -40,6 +40,10 @@ from . import sexpdata
 # Regular expression pattern for splitting versions.
 _VERSION_PATTERN = re.compile(r"^(.*)\.(\d+)$")
 
+# Matching pattern for info records.
+_INFO_RECORD_PATTERN = \
+    re.compile(br"^([^ ]+) ([^ ]+) (.+) by ([^ ]+) ?(\*DELETED\*)?")
+
 class PrcsError(Exception):
     """base exception class for the prcslib package
     """
@@ -95,8 +99,6 @@ class PrcsProject:
         """construct a Project object."""
         self._command = "prcs"
         self.name = name
-        self.info_re = re.compile(
-            r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
 
     def versions(self):
         """return a dictionary of the summary records for all the versions
@@ -107,16 +109,16 @@ class PrcsProject:
         if not err:
             # We use iteration over lines so that we can detect parse errors.
             for line in out.splitlines():
-                match = self.info_re.search(line)
+                match = _INFO_RECORD_PATTERN.match(line)
                 if match:
-                    # The prcs info command always returns the local time.
-                    date = parsedate(match.group(3))
-                    versions[match.group(2)] = {
-                        "project": match.group(1),
-                        "id": match.group(2),
-                        "date": datetime(*date[0:6]),
-                        "author": match.group(4),
-                        "deleted": bool(match.group(5))
+                    # Note: the 'prcs info' command returns local times.
+                    project, version, date, author, deleted = match.groups()
+                    versions[version.decode()] = {
+                        "project": project.decode(),
+                        "id": version.decode(),
+                        "date": datetime(*parsedate(date.decode())[0:6]),
+                        "author": author.decode(),
+                        "deleted": bool(deleted),
                     }
         else:
             raise PrcsCommandError(err)
