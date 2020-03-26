@@ -52,10 +52,14 @@ class PrcsCommandError(PrcsError):
         self.error_message = error_message
 
 class PrcsVersion:
-    """version identifier on PRCS
+    """
+    version identifier on PRCS
     """
 
     def __init__(self, major, minor=None):
+        """
+        construct a version identifier
+        """
         if minor is None:
             match = _VERSION_PATTERN.match(major)
             major, minor = match.groups()
