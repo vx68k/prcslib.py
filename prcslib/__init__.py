@@ -75,12 +75,14 @@ class PrcsVersion:
         return self._major + "." + str(self._minor)
 
     def major(self):
-        """major version
+        """
+        major part of the version identifier
         """
         return self._major
 
     def minor(self):
-        """minor version
+        """
+        minor part of the version identifier
         """
         return self._minor
 
