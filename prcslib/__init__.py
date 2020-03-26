@@ -60,11 +60,15 @@ class PrcsVersion:
         """
         construct a version identifier
         """
-        if minor is None:
+        if isinstance(major, PrcsVersion):
+            if minor is None:
+                minor = major.minor()
+            major = major.major()
+        elif minor is None:
             match = _VERSION_PATTERN.match(major)
             major, minor = match.groups()
 
-        self._major = major
+        self._major = str(major)
         self._minor = int(minor)
 
     def __str__(self):
