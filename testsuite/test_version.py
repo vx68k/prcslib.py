@@ -1,4 +1,4 @@
-# __init__.py - initialization of the test suite package
+# test_version.py - tests the 'PrcsVersion' class
 # Copyright (C) 2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,8 +22,35 @@
 # SPDX-License-Identifier: MIT
 
 """
-test suite package
+tests for the 'PrcsVersion' class
 """
 
 from __future__ import absolute_import, unicode_literals
-from .test_version import *
+from unittest import TestCase
+from prcslib import PrcsVersion
+
+class PrcsVersionTest(TestCase):
+    """
+    test case class for 'PrcsVersion'
+    """
+
+    def setUp(self):
+        """
+        set up a test fixture
+        """
+        self._version1 = PrcsVersion("0.1")
+        self._version2 = PrcsVersion("1.2", 3)
+
+    def testMajor(self):
+        """
+        test 'major'
+        """
+        self.assertEqual("0", self._version1.major())
+        self.assertEqual("1.2", self._version2.major())
+
+    def testMinor(self):
+        """
+        test 'minor'
+        """
+        self.assertEqual(1, self._version1.minor())
+        self.assertEqual(3, self._version2.minor())

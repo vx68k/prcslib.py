@@ -25,11 +25,12 @@
 setup script for the 'prcslib' package
 """
 
+from __future__ import absolute_import
 from os import path
 from setuptools import setup, find_packages
 
 # Package version.
-PACKAGE_VERSION = "1.0"
+PACKAGE_VERSION = "2.0"
 
 def long_description():
     """
@@ -60,8 +61,11 @@ if __name__ == "__main__":
             "Programming Language :: Python :: 2.7",
             "Topic :: Software Development :: Version Control",
         ],
-        obsoletes=["prcs2hg(<2.0)"],
+        obsoletes=[
+            "prcs2hg(<2.0)",
+        ],
         python_requires=">=2.7",
+        zip_safe=True,
 
         packages=find_packages(exclude=["testsuite", "testsuite.*"]),
         test_suite="testsuite",

@@ -1,10 +1,9 @@
 syntax: regexp
-(^|/)nbproject/private$
 (^|/)dist$
 (^|/)build$
-(^|/)\.eggs/
-\.egg-info/
-(^|/)__pycache__/
+(^|/)\.tox$
+(^|/)\.eggs$
+\.egg-info$
 \.pyc$
 \.rej$
 \.orig$

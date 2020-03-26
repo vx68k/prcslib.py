@@ -1,5 +1,5 @@
 # prcslib - Python API for PRCS
-# Copyright (C) 2012-2019 Kaz Nishimura
+# Copyright (C) 2012-2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to
@@ -28,6 +28,7 @@ PRCS (Project Revision Control System) is a legacy version control system
 which works on a set of files at once.
 """
 
+from __future__ import absolute_import, unicode_literals
 import sys
 import re
 import os
@@ -38,6 +39,10 @@ from . import sexpdata
 
 # Regular expression pattern for splitting versions.
 _VERSION_PATTERN = re.compile(r"^(.*)\.(\d+)$")
+
+# Matching pattern for info records.
+_INFO_RECORD_PATTERN = \
+    re.compile(br"^([^ ]+) ([^ ]+) (.+) by ([^ ]+) ?(\*DELETED\*)?")
 
 class PrcsError(Exception):
     """base exception class for the prcslib package
@@ -52,27 +57,37 @@ class PrcsCommandError(PrcsError):
         self.error_message = error_message
 
 class PrcsVersion:
-    """version identifier on PRCS
+    """
+    version identifier on PRCS
     """
 
     def __init__(self, major, minor=None):
-        if minor is None:
+        """
+        construct a version identifier
+        """
+        if isinstance(major, PrcsVersion):
+            if minor is None:
+                minor = major.minor()
+            major = major.major()
+        elif minor is None:
             match = _VERSION_PATTERN.match(major)
             major, minor = match.groups()
 
-        self._major = major
+        self._major = str(major)
         self._minor = int(minor)
 
     def __str__(self):
         return self._major + "." + str(self._minor)
 
     def major(self):
-        """major version
+        """
+        major part of the version identifier
         """
         return self._major
 
     def minor(self):
-        """minor version
+        """
+        minor part of the version identifier
         """
         return self._minor
 
@@ -84,28 +99,26 @@ class PrcsProject:
         """construct a Project object."""
         self._command = "prcs"
         self.name = name
-        self.info_re = re.compile(
-            r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+)( \*DELETED\*|)")
 
     def versions(self):
         """return a dictionary of the summary records for all the versions
         """
-        out, err = self._run_prcs(["info", "-f", self.name])
+        out, err, status = self._run_prcs(["info", "-f", self.name])
 
         versions = {}
         if not err:
             # We use iteration over lines so that we can detect parse errors.
             for line in out.splitlines():
-                match = self.info_re.search(line)
+                match = _INFO_RECORD_PATTERN.match(line)
                 if match:
-                    # The prcs info command always returns the local time.
-                    date = parsedate(match.group(3))
-                    versions[match.group(2)] = {
-                        "project": match.group(1),
-                        "id": match.group(2),
-                        "date": datetime(*date[0:6]),
-                        "author": match.group(4),
-                        "deleted": bool(match.group(5))
+                    # Note: the 'prcs info' command returns local times.
+                    project, version, date, author, deleted = match.groups()
+                    versions[version.decode()] = {
+                        "project": project.decode(),
+                        "id": version.decode(),
+                        "date": datetime(*parsedate(date.decode())[0:6]),
+                        "author": author.decode(),
+                        "deleted": bool(deleted),
                     }
         else:
             raise PrcsCommandError(err)
@@ -125,10 +138,10 @@ class PrcsProject:
             files = []
         args = ["checkout", "-fqu"]
         if version is not None:
-            args.extend(["-r", version])
+            args.extend(["-r", str(version)])
         args.append(self.name)
         args.extend(files)
-        __, err = self._run_prcs(args)
+        __, err, status = self._run_prcs(args)
         if err:
             sys.stderr.write(err)
 
@@ -140,7 +153,8 @@ class PrcsProject:
             args = []
         prcs = Popen(
             [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        return prcs.communicate(stdin)
+        out, err = prcs.communicate(stdin)
+        return out, err, prcs.returncode
 
 class PrcsDescriptor:
     """project descriptor on PRCS
