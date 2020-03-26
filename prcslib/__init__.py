@@ -103,7 +103,7 @@ class PrcsProject:
     def versions(self):
         """return a dictionary of the summary records for all the versions
         """
-        out, err = self._run_prcs(["info", "-f", self.name])
+        out, err, status = self._run_prcs(["info", "-f", self.name])
 
         versions = {}
         if not err:
@@ -141,7 +141,7 @@ class PrcsProject:
             args.extend(["-r", str(version)])
         args.append(self.name)
         args.extend(files)
-        __, err = self._run_prcs(args)
+        __, err, status = self._run_prcs(args)
         if err:
             sys.stderr.write(err)
 
@@ -153,7 +153,8 @@ class PrcsProject:
             args = []
         prcs = Popen(
             [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        return prcs.communicate(stdin)
+        out, err = prcs.communicate(stdin)
+        return out, err, prcs.returncode
 
 class PrcsDescriptor:
     """project descriptor on PRCS
