@@ -101,27 +101,27 @@ class PrcsProject:
         self.name = name
 
     def versions(self):
-        """return a dictionary of the summary records for all the versions
+        """
+        return a dictionary of the summary records for all the versions
         """
         out, err, status = self._run_prcs(["info", "-f", self.name])
+        if status != 0:
+            raise PrcsCommandError(err)
 
         versions = {}
-        if not err:
-            # We use iteration over lines so that we can detect parse errors.
-            for line in out.splitlines():
-                match = _INFO_RECORD_PATTERN.match(line)
-                if match:
-                    # Note: the 'prcs info' command returns local times.
-                    project, version, date, author, deleted = match.groups()
-                    versions[version.decode()] = {
-                        "project": project.decode(),
-                        "id": version.decode(),
-                        "date": datetime(*parsedate(date.decode())[0:6]),
-                        "author": author.decode(),
-                        "deleted": bool(deleted),
-                    }
-        else:
-            raise PrcsCommandError(err)
+        # We use iteration over lines so that we can detect parse errors.
+        for line in out.splitlines():
+            match = _INFO_RECORD_PATTERN.match(line)
+            if match:
+                # Note: the 'prcs info' command returns local times.
+                project, version, date, author, deleted = match.groups()
+                versions[version.decode()] = {
+                    "project": project.decode(),
+                    "id": version.decode(),
+                    "date": datetime(*parsedate(date.decode())[0:6]),
+                    "author": author.decode(),
+                    "deleted": bool(deleted),
+                }
         return versions
 
     def descriptor(self, version=None):
