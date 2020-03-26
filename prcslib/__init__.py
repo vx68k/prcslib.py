@@ -135,7 +135,7 @@ class PrcsProject:
             files = []
         args = ["checkout", "-fqu"]
         if version is not None:
-            args.extend(["-r", version])
+            args.extend(["-r", str(version)])
         args.append(self.name)
         args.extend(files)
         __, err = self._run_prcs(args)
