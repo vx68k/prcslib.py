@@ -28,6 +28,7 @@ PRCS (Project Revision Control System) is a legacy version control system
 which works on a set of files at once.
 """
 
+from __future__ import absolute_import, unicode_literals
 import sys
 import re
 import os
