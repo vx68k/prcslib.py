@@ -42,7 +42,7 @@ _VERSION_PATTERN = re.compile(r"^(.*)\.(\d+)$")
 
 # Matching pattern for info records.
 _INFO_RECORD_PATTERN = \
-    re.compile(br"^([^ ]+) ([^ ]+) (.+) by ([^ ]+) ?(\*DELETED\*)?")
+    re.compile(r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+) ?(\*DELETED\*)?")
 
 class PrcsError(Exception):
     """base exception class for the prcslib package
@@ -111,15 +111,15 @@ class PrcsProject:
         versions = {}
         # We use iteration over lines so that we can detect parse errors.
         for line in out.splitlines():
-            match = _INFO_RECORD_PATTERN.match(line)
+            match = _INFO_RECORD_PATTERN.match(line.decode())
             if match:
                 # Note: the 'prcs info' command returns local times.
                 project, version, date, author, deleted = match.groups()
-                versions[version.decode()] = {
-                    "project": project.decode(),
-                    "id": version.decode(),
-                    "date": datetime(*parsedate(date.decode())[0:6]),
-                    "author": author.decode(),
+                versions[version] = {
+                    "project": project,
+                    "id": version,
+                    "date": datetime(*parsedate(date)[0:6]),
+                    "author": author,
                     "deleted": bool(deleted),
                 }
         return versions
