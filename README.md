@@ -1,6 +1,6 @@
 # Introduction
 
-The `prcslib` package provides a <dfn>Python API for PRCS</dfn>.
+The [`prcslib`][prcslib] package provides a <dfn>Python API for PRCS</dfn>.
 
 [PRCS][] (Project Revision Control System) is a legacy version control system
 that manages a *project* consisting of multiple files
@@ -9,6 +9,7 @@ and records related changes across them as a unit.
 See the [home page][] for more information about the `prcslib` package.
 
 [home page]: https://vx68k.bitbucket.io/prcslib.py/
+[prcslib]: https://pypi.org/project/prcslib/
 [PRCS]: http://prcs.sourceforge.net/
 
 [![(Chat)](https://img.shields.io/gitter/room/vx68k/prcslib.py.svg)][Gitter room]
