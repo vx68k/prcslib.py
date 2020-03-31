@@ -142,8 +142,8 @@ class PrcsProject:
         args.append(self.name)
         args.extend(files)
         __, err, status = self._run_prcs(args)
-        if err:
-            sys.stderr.write(err)
+        if status != 0:
+            raise PrcsCommandError(err.decode())
 
     def _run_prcs(self, args=None, stdin=None):
         """
