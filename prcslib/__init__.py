@@ -58,12 +58,16 @@ class PrcsCommandError(PrcsError):
 
 class PrcsVersion:
     """
-    version identifier on PRCS
+    Version identifier on PRCS
+
+    A version identifier on PRCS is composed of major and minor parts separated
+    by a full stop (U+002E). The former is a string, and the latter is a
+    positive integral number.
     """
 
     def __init__(self, major, minor=None):
         """
-        construct a version identifier
+        Construct a version identifier
         """
         if isinstance(major, PrcsVersion):
             if minor is None:
@@ -81,13 +85,13 @@ class PrcsVersion:
 
     def major(self):
         """
-        major part of the version identifier
+        Return the major part of the version identifier as a 'str' value
         """
         return self._major
 
     def minor(self):
         """
-        minor part of the version identifier
+        Return the minor part of the version identifier as an 'int' value
         """
         return self._minor
 
