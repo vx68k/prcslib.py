@@ -54,6 +54,7 @@ if __name__ == "__main__":
         description="Python API for PRCS.",
         url="https://vx68k.bitbucket.io/prcslib.py/",
         project_urls={
+            # Libraries.io will pick the 'Source' location for the repository.
             "Source": "https://github.com/vx68k/prcslib.py",
         },
         author="Kaz Nishimura",
