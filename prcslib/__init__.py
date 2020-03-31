@@ -106,7 +106,7 @@ class PrcsProject:
         """
         out, err, status = self._run_prcs(["info", "-f", self.name])
         if status != 0:
-            raise PrcsCommandError(err)
+            raise PrcsCommandError(err.decode())
 
         versions = {}
         # We use iteration over lines so that we can detect parse errors.
