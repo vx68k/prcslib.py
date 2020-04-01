@@ -24,3 +24,17 @@
 """
 prepare a PRCS project for tests
 """
+
+from __future__ import absolute_import
+import sys
+import os
+
+def main():
+    """
+    Prepare a PRCS project by extracting from a package
+    """
+    package = sys.argv[1]
+    os.system("base64 -d '%s' | prcs unpackage -f -" % package)
+
+if __name__ == "__main__":
+    main()
