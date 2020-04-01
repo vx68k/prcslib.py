@@ -73,6 +73,6 @@ if __name__ == "__main__":
         python_requires=">=2.7",
         zip_safe=True,
 
-        packages=find_packages(exclude=["testsuite", "testsuite.*"]),
+        packages=find_packages(exclude=["test", "test.*"]),
         test_suite="testsuite",
     )
