@@ -34,7 +34,7 @@ def main():
     Prepare a PRCS project by extracting from a package
     """
     package = sys.argv[1]
-    os.system("base64 -d '%s' | prcs unpackage -f -" % package)
+    return os.system("base64 -d '%s' | prcs unpackage -f -" % package)
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main() != 0)
