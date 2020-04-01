@@ -1,0 +1,2 @@
+include test/prepare.py
+include test/*.b64
