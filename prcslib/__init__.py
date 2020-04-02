@@ -42,7 +42,7 @@ _VERSION_PATTERN = re.compile(r"^(.*)\.(\d+)$")
 
 # Matching pattern for info records.
 _INFO_RECORD_PATTERN = \
-    re.compile(br"^([^ ]+) ([^ ]+) (.+) by ([^ ]+) ?(\*DELETED\*)?")
+    re.compile(r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+) ?(\*DELETED\*)?")
 
 class PrcsError(Exception):
     """base exception class for the prcslib package
@@ -58,12 +58,16 @@ class PrcsCommandError(PrcsError):
 
 class PrcsVersion:
     """
-    version identifier on PRCS
+    Version identifier on PRCS
+
+    A version identifier on PRCS is composed of major and minor parts separated
+    by a full stop (U+002E). The former is a string, and the latter is a
+    positive integral number.
     """
 
     def __init__(self, major, minor=None):
         """
-        construct a version identifier
+        Construct a version identifier
         """
         if isinstance(major, PrcsVersion):
             if minor is None:
@@ -81,13 +85,13 @@ class PrcsVersion:
 
     def major(self):
         """
-        major part of the version identifier
+        Return the major part of the version identifier as a 'str' value
         """
         return self._major
 
     def minor(self):
         """
-        minor part of the version identifier
+        Return the minor part of the version identifier as an 'int' value
         """
         return self._minor
 
@@ -101,27 +105,27 @@ class PrcsProject:
         self.name = name
 
     def versions(self):
-        """return a dictionary of the summary records for all the versions
+        """
+        return a dictionary of the summary records for all the versions
         """
         out, err, status = self._run_prcs(["info", "-f", self.name])
+        if status != 0:
+            raise PrcsCommandError(err.decode())
 
         versions = {}
-        if not err:
-            # We use iteration over lines so that we can detect parse errors.
-            for line in out.splitlines():
-                match = _INFO_RECORD_PATTERN.match(line)
-                if match:
-                    # Note: the 'prcs info' command returns local times.
-                    project, version, date, author, deleted = match.groups()
-                    versions[version.decode()] = {
-                        "project": project.decode(),
-                        "id": version.decode(),
-                        "date": datetime(*parsedate(date.decode())[0:6]),
-                        "author": author.decode(),
-                        "deleted": bool(deleted),
-                    }
-        else:
-            raise PrcsCommandError(err)
+        # We use iteration over lines so that we can detect parse errors.
+        for line in out.splitlines():
+            match = _INFO_RECORD_PATTERN.match(line.decode())
+            if match:
+                # Note: the 'prcs info' command returns local times.
+                project, version, date, author, deleted = match.groups()
+                versions[version] = {
+                    "project": project,
+                    "id": version,
+                    "date": datetime(*parsedate(date)[0:6]),
+                    "author": author,
+                    "deleted": bool(deleted),
+                }
         return versions
 
     def descriptor(self, version=None):
@@ -142,8 +146,8 @@ class PrcsProject:
         args.append(self.name)
         args.extend(files)
         __, err, status = self._run_prcs(args)
-        if err:
-            sys.stderr.write(err)
+        if status != 0:
+            raise PrcsCommandError(err.decode())
 
     def _run_prcs(self, args=None, stdin=None):
         """
