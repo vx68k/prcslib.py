@@ -11,8 +11,6 @@
     "python.testing.unittestEnabled": true,
     "python.testing.unittestArgs": [
         "-s",
-        "./testsuite",
-        "-p",
-        "test*.py"
+        "test"
     ]
 }
