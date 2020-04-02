@@ -31,6 +31,7 @@ from setuptools import setup, find_packages
 
 # Package name.
 PACKAGE_NAME = "prcslib"
+
 # Package version.
 PACKAGE_VERSION = "3.0"
 
