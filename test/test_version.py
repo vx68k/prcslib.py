@@ -41,14 +41,14 @@ class PrcsVersionTest(TestCase):
         self._version1 = PrcsVersion("0.1")
         self._version2 = PrcsVersion("1.2", 3)
 
-    def testMajor(self):
+    def test_major(self):
         """
         test 'major'
         """
         self.assertEqual("0", self._version1.major())
         self.assertEqual("1.2", self._version2.major())
 
-    def testMinor(self):
+    def test_minor(self):
         """
         test 'minor'
         """
