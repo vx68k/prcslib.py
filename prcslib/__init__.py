@@ -83,6 +83,19 @@ class PrcsVersion:
     def __str__(self):
         return self._major + "." + str(self._minor)
 
+    def __eq__(self, other):
+        """
+        Return 'true' if 'str(self)' == 'other'.
+        """
+        return str(self) == other
+
+    def __ne__(self, other):
+        """
+        Return 'false' if 'self' == 'other'.
+        """
+        equal = self.__eq__(other)
+        return not equal if equal is not NotImplemented else NotImplemented
+
     def major(self):
         """
         Return the major part of the version identifier as a 'str' value
