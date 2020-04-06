@@ -29,7 +29,7 @@ from __future__ import absolute_import, unicode_literals
 from unittest import TestCase
 from prcslib import PrcsVersion
 
-class PrcsVersionTest(TestCase):
+class VersionTests(TestCase):
     """
     test case class for 'PrcsVersion'
     """
