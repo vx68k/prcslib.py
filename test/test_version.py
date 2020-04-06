@@ -22,7 +22,7 @@
 # SPDX-License-Identifier: MIT
 
 """
-tests for the 'PrcsVersion' class
+unit tests for the 'PrcsVersion' class
 """
 
 from __future__ import absolute_import, unicode_literals
@@ -31,33 +31,33 @@ from prcslib import PrcsVersion
 
 class VersionTests(TestCase):
     """
-    test case class for 'PrcsVersion'
+    Test case class for the 'PrcsVersion' class.
     """
 
     def setUp(self):
         """
-        set up a test fixture
+        Set up the test fixture.
         """
         self._version1 = PrcsVersion("0.1")
         self._version2 = PrcsVersion("1.2", 3)
 
     def test_major(self):
         """
-        test 'major'
+        Test the 'major' method.
         """
         self.assertEqual("0", self._version1.major())
         self.assertEqual("1.2", self._version2.major())
 
     def test_minor(self):
         """
-        test 'minor'
+        Test the 'minor' method.
         """
         self.assertEqual(1, self._version1.minor())
         self.assertEqual(3, self._version2.minor())
 
     def test_equality(self):
         """
-        Test version equality.
+        Test equality of versions.
         """
         self.assertEqual(self._version1, self._version1)
         self.assertNotEqual(self._version2, self._version1)
