@@ -54,3 +54,10 @@ class VersionTests(TestCase):
         """
         self.assertEqual(1, self._version1.minor())
         self.assertEqual(3, self._version2.minor())
+
+    def test_equality(self):
+        """
+        Test version equality.
+        """
+        self.assertEqual(self._version1, self._version1)
+        self.assertNotEqual(self._version2, self._version1)
