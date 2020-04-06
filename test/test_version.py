@@ -61,3 +61,4 @@ class VersionTests(TestCase):
         """
         self.assertEqual(self._version1, self._version1)
         self.assertNotEqual(self._version2, self._version1)
+        self.assertEqual(self._version1, PrcsVersion(self._version1))
