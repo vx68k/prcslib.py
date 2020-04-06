@@ -21,7 +21,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""Python API for PRCS
+"""
+Python API for PRCS
 
 This package provides an API for PRCS.
 PRCS (Project Revision Control System) is a legacy version control system
@@ -58,7 +59,7 @@ class PrcsCommandError(PrcsError):
 
 class PrcsVersion:
     """
-    Version identifier on PRCS
+    Version identifier on PRCS.
 
     A version identifier on PRCS is composed of major and minor parts separated
     by a full stop (U+002E). The former is a string, and the latter is a
@@ -67,7 +68,7 @@ class PrcsVersion:
 
     def __init__(self, major, minor=None):
         """
-        Construct a version identifier
+        Construct a version identifier.
         """
         if isinstance(major, PrcsVersion):
             if minor is None:
@@ -98,13 +99,13 @@ class PrcsVersion:
 
     def major(self):
         """
-        Return the major part of the version identifier as a 'str' value
+        Return the major part of the version identifier as a 'str' value.
         """
         return self._major
 
     def minor(self):
         """
-        Return the minor part of the version identifier as an 'int' value
+        Return the minor part of the version identifier as an 'int' value.
         """
         return self._minor
 
