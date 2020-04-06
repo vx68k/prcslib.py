@@ -29,6 +29,7 @@ from __future__ import absolute_import, unicode_literals
 from unittest import TestCase
 from prcslib import PrcsProject
 
+# PRCS project name for tests.
 PRCS_PROJECT_NAME = "testproject"
 
 class ProjectTests(TestCase):
