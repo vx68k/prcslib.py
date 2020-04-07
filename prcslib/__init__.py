@@ -97,6 +97,12 @@ class PrcsVersion:
         equal = self.__eq__(other)
         return not equal if not equal is NotImplemented else NotImplemented
 
+    def __hash__(self):
+        """
+        Return 'hash(str(self))'.
+        """
+        return hash(str(self))
+
     def major(self):
         """
         Return the major part of the version identifier as a 'str' value.
