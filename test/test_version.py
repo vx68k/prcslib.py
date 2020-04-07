@@ -62,3 +62,11 @@ class VersionTests(TestCase):
         self.assertEqual(self._version1, self._version1)
         self.assertNotEqual(self._version2, self._version1)
         self.assertEqual(self._version1, PrcsVersion(self._version1))
+
+    def test_hash(self):
+        """
+        Test hash values of versions.
+        """
+        self.assertEqual(hash(self._version1), hash(self._version1))
+        self.assertNotEqual(hash(self._version2), hash(self._version1))
+        self.assertEqual(hash("0.1"), hash(self._version1))
