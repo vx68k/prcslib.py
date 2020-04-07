@@ -75,5 +75,4 @@ if __name__ == "__main__":
         zip_safe=True,
 
         packages=find_packages(exclude=["test", "test.*"]),
-        test_suite="testsuite",
     )
