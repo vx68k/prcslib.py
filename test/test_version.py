@@ -1,4 +1,4 @@
-# test_version.py - tests the 'PrcsVersion' class
+# test_version.py
 # Copyright (C) 2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
