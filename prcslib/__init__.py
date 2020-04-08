@@ -208,12 +208,14 @@ class PrcsDescriptor:
         return PrcsVersion(major, minor)
 
     def mergeparents(self):
-        """Return the list of merge parents."""
-        p = []
+        """
+        Return the list of the merge parents.
+        """
+        parents = []
         for i in self.properties["Merge-Parents"]:
             if i[1].value() == "complete":
-                p.append(i[0].value())
-        return p
+                parents.append(i[0].value())
+        return parents
 
     def message(self):
         """Return the log message."""
