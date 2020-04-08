@@ -82,6 +82,9 @@ class PrcsVersion:
         self._minor = int(minor)
 
     def __str__(self):
+        """
+        Return the version identifier as a 'str' value.
+        """
         return self._major + "." + str(self._minor)
 
     def __eq__(self, other):
