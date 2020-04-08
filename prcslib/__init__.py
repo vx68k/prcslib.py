@@ -46,14 +46,19 @@ _INFO_RECORD_PATTERN = \
     re.compile(r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+) ?(\*DELETED\*)?")
 
 class PrcsError(Exception):
-    """base exception class for the prcslib package
+    """
+    Base exception class for the prcslib package.
     """
 
 class PrcsCommandError(PrcsError):
-    """Error from the PRCS command."""
+    """
+    Error from the PRCS command.
+    """
 
     def __init__(self, error_message):
-        """Construct a command error with an error message from PRCS."""
+        """
+        Construct a command error with an error message from PRCS.
+        """
         super(PrcsCommandError, self).__init__(self)
         self.error_message = error_message
 
@@ -119,17 +124,20 @@ class PrcsVersion:
         return self._minor
 
 class PrcsProject:
-    """project on PRCS
+    """
+    Project on PRCS.
     """
 
     def __init__(self, name):
-        """construct a Project object."""
+        """
+        Construct a Project object.
+        """
         self._command = "prcs"
         self.name = name
 
     def versions(self):
         """
-        return a dictionary of the summary records for all the versions
+        Return a dictionary of the summary records for all the versions.
         """
         out, err, status = self._run_prcs(["info", "-f", self.name])
         if status != 0:
@@ -153,13 +161,13 @@ class PrcsProject:
 
     def descriptor(self, version=None):
         """
-        return the project descriptor for a version
+        Return the project descriptor for a version.
         """
         return PrcsDescriptor(self, version)
 
     def checkout(self, version=None, files=None):
         """
-        check out a version
+        Check out a version.
         """
         if files is None:
             files = []
@@ -174,7 +182,7 @@ class PrcsProject:
 
     def _run_prcs(self, args=None, stdin=None):
         """
-        run a PRCS command as a subprocess
+        Run a PRCS command as a subprocess.
         """
         if args is None:
             args = []
@@ -184,7 +192,8 @@ class PrcsProject:
         return out, err, prcs.returncode
 
 class PrcsDescriptor:
-    """project descriptor on PRCS
+    """
+    Project descriptor on PRCS
     """
 
     def __init__(self, project, version=None):
@@ -194,12 +203,16 @@ class PrcsDescriptor:
         os.unlink(prj_name)
 
     def version(self):
-        """Return the version in this descriptor."""
+        """
+        Return the version in this descriptor.
+        """
         v = self.properties["Project-Version"]
         return PrcsVersion(v[1].value(), v[2].value())
 
     def parentversion(self):
-        """Return the major and minor parent versions."""
+        """
+        Return the major and minor parent versions.
+        """
         v = self.properties["Parent-Version"]
         major = v[1].value()
         minor = v[2].value()
@@ -209,7 +222,7 @@ class PrcsDescriptor:
 
     def mergeparents(self):
         """
-        Return the list of the merge parents.
+        Return a 'list' value for the merge parents.
         """
         parents = []
         for i in self.properties["Merge-Parents"]:
@@ -218,11 +231,15 @@ class PrcsDescriptor:
         return parents
 
     def message(self):
-        """Return the log message."""
+        """
+        Return the log message.
+        """
         return self.properties["Version-Log"][0]
 
     def files(self):
-        """Return the file information as a dictionary."""
+        """
+        Return the file information as a dictionary.
+        """
         files = {}
         for i in self.properties["Files"]:
             name = i[0].value()
