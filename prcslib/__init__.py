@@ -123,6 +123,74 @@ class PrcsVersion:
         """
         return self._minor
 
+class PrcsDescriptor:
+    """
+    Project descriptor on PRCS.
+    """
+
+    def __init__(self, project, version=None):
+        prj_name = project.name + ".prj"
+        project.checkout(version, files=[prj_name])
+        self.properties = _readdescriptor(prj_name)
+        os.unlink(prj_name)
+
+    def version(self):
+        """
+        Return the version in this descriptor.
+        """
+        v = self.properties["Project-Version"]
+        return PrcsVersion(v[1].value(), v[2].value())
+
+    def parentversion(self):
+        """
+        Return the major and minor parent versions.
+        """
+        v = self.properties["Parent-Version"]
+        major = v[1].value()
+        minor = v[2].value()
+        if v[0].value() == "-*-" and major == "-*-" and minor == "-*-":
+            return None
+        return PrcsVersion(major, minor)
+
+    def mergeparents(self):
+        """
+        Return a 'list' value for the merge parents.
+        """
+        parents = []
+        for i in self.properties["Merge-Parents"]:
+            if i[1].value() == "complete":
+                parents.append(i[0].value())
+        return parents
+
+    def message(self):
+        """
+        Return the log message.
+        """
+        return self.properties["Version-Log"][0]
+
+    def files(self):
+        """
+        Return the file information as a dictionary.
+        """
+        files = {}
+        for i in self.properties["Files"]:
+            name = i[0].value()
+            symlink = False
+            for j in i[2:]:
+                if j.value() == ":symlink":
+                    symlink = True
+            if symlink:
+                files[name] = {
+                    "symlink": i[1][0].value(),
+                }
+            else:
+                files[name] = {
+                    "id": i[1][0].value(),
+                    "revision": i[1][1].value(),
+                    "mode": int(i[1][2].value(), 8),
+                }
+        return files
+
 class PrcsProject:
     """
     Project on PRCS.
@@ -190,74 +258,6 @@ class PrcsProject:
             [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         out, err = prcs.communicate(stdin)
         return out, err, prcs.returncode
-
-class PrcsDescriptor:
-    """
-    Project descriptor on PRCS
-    """
-
-    def __init__(self, project, version=None):
-        prj_name = project.name + ".prj"
-        project.checkout(version, [prj_name])
-        self.properties = _readdescriptor(prj_name)
-        os.unlink(prj_name)
-
-    def version(self):
-        """
-        Return the version in this descriptor.
-        """
-        v = self.properties["Project-Version"]
-        return PrcsVersion(v[1].value(), v[2].value())
-
-    def parentversion(self):
-        """
-        Return the major and minor parent versions.
-        """
-        v = self.properties["Parent-Version"]
-        major = v[1].value()
-        minor = v[2].value()
-        if v[0].value() == "-*-" and major == "-*-" and minor == "-*-":
-            return None
-        return PrcsVersion(major, minor)
-
-    def mergeparents(self):
-        """
-        Return a 'list' value for the merge parents.
-        """
-        parents = []
-        for i in self.properties["Merge-Parents"]:
-            if i[1].value() == "complete":
-                parents.append(i[0].value())
-        return parents
-
-    def message(self):
-        """
-        Return the log message.
-        """
-        return self.properties["Version-Log"][0]
-
-    def files(self):
-        """
-        Return the file information as a dictionary.
-        """
-        files = {}
-        for i in self.properties["Files"]:
-            name = i[0].value()
-            symlink = False
-            for j in i[2:]:
-                if j.value() == ":symlink":
-                    symlink = True
-            if symlink:
-                files[name] = {
-                    "symlink": i[1][0].value(),
-                }
-            else:
-                files[name] = {
-                    "id": i[1][0].value(),
-                    "revision": i[1][1].value(),
-                    "mode": int(i[1][2].value(), 8),
-                }
-        return files
 
 def _readdescriptor(name):
     with open(name, "r") as f:
