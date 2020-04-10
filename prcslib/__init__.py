@@ -148,17 +148,19 @@ class PrcsVersionDescriptor:
         """
         Return the version of the desciptor.
         """
-        v = self._properties["Project-Version"]
-        return PrcsVersion(v[1].value(), v[2].value())
+        version = self._properties["Project-Version"]
+        major = version[1].value()
+        minor = version[2].value()
+        return PrcsVersion(major, minor)
 
     def parentversion(self):
         """
         Return the parent version of the descriptor.
         """
-        v = self._properties["Parent-Version"]
-        major = v[1].value()
-        minor = v[2].value()
-        if v[0].value() == "-*-" and major == "-*-" and minor == "-*-":
+        version = self._properties["Parent-Version"]
+        major = version[1].value()
+        minor = version[2].value()
+        if major == "-*-" and minor == "-*-":
             return None
         return PrcsVersion(major, minor)
 
