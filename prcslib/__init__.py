@@ -155,7 +155,13 @@ class PrcsVersionDescriptor:
 
     def parentversion(self):
         """
-        Return the parent version of the descriptor.
+        Return 'self.parent()'.
+        """
+        return self.parent()
+
+    def parent(self):
+        """
+        Return the parent of the descriptor as a 'PrcsVersion' value.
         """
         version = self._properties["Parent-Version"]
         major = version[1].value()
