@@ -103,7 +103,7 @@ class PrcsVersion:
         Return 'false' if 'self' == 'other'.
         """
         equal = self.__eq__(other)
-        return not equal if not equal is NotImplemented else NotImplemented
+        return not equal if not (equal is NotImplemented) else NotImplemented
 
     def __hash__(self):
         """
