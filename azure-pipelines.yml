@@ -28,7 +28,7 @@ stages:
               python -m xmlrunner discover -s test -o test-reports
             displayName: Test
             env:
-              PRCS_REPOSITORY: /tmp/PRCS
+              PRCS_REPOSITORY: $(Agent.TempDirectory)/PRCS
           - task: PublishTestResults@2
             condition: succeededOrFailed()
           - bash: |

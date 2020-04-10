@@ -33,7 +33,7 @@ from setuptools import setup, find_packages
 PACKAGE_NAME = "prcslib"
 
 # Package version.
-PACKAGE_VERSION = "3.0"
+PACKAGE_VERSION = "4.0"
 
 def long_description():
     """
@@ -75,5 +75,4 @@ if __name__ == "__main__":
         zip_safe=True,
 
         packages=find_packages(exclude=["test", "test.*"]),
-        test_suite="testsuite",
     )

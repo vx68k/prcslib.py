@@ -1,4 +1,4 @@
-# test_version.py
+# test_project.py
 # Copyright (C) 2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,51 +22,30 @@
 # SPDX-License-Identifier: MIT
 
 """
-unit tests for the 'PrcsVersion' class
+unit tests for the 'PrcsProject' class
 """
 
 from __future__ import absolute_import, unicode_literals
 from unittest import TestCase
-from prcslib import PrcsVersion
+from prcslib import PrcsProject
 
-class VersionTests(TestCase):
+# PRCS project name for tests.
+PRCS_PROJECT_NAME = "testproject"
+
+class ProjectTests(TestCase):
     """
-    Test case class for the 'PrcsVersion' class.
+    Test case class for 'PrcsProject'
     """
 
     def setUp(self):
         """
-        Set up the test fixture.
+        Set up a test case
         """
-        self._version1 = PrcsVersion("0.1")
-        self._version2 = PrcsVersion("1.2", 3)
+        self._project = PrcsProject(PRCS_PROJECT_NAME)
 
-    def test_major(self):
+    def test_versions(self):
         """
-        Test the 'major' method.
+        Test the 'versions' function
         """
-        self.assertEqual("0", self._version1.major())
-        self.assertEqual("1.2", self._version2.major())
-
-    def test_minor(self):
-        """
-        Test the 'minor' method.
-        """
-        self.assertEqual(1, self._version1.minor())
-        self.assertEqual(3, self._version2.minor())
-
-    def test_equality(self):
-        """
-        Test equality of versions.
-        """
-        self.assertEqual(self._version1, self._version1)
-        self.assertNotEqual(self._version2, self._version1)
-        self.assertEqual(self._version1, PrcsVersion(self._version1))
-
-    def test_hash(self):
-        """
-        Test hash values of versions.
-        """
-        self.assertEqual(hash(self._version1), hash(self._version1))
-        self.assertNotEqual(hash(self._version2), hash(self._version1))
-        self.assertEqual(hash("0.1"), hash(self._version1))
+        versions = self._project.versions()
+        self.assertTrue("0.1" in versions)

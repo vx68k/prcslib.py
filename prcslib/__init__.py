@@ -21,7 +21,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""Python API for PRCS
+"""
+Python API for PRCS
 
 This package provides an API for PRCS.
 PRCS (Project Revision Control System) is a legacy version control system
@@ -45,20 +46,25 @@ _INFO_RECORD_PATTERN = \
     re.compile(r"^([^ ]+) ([^ ]+) (.+) by ([^ ]+) ?(\*DELETED\*)?")
 
 class PrcsError(Exception):
-    """base exception class for the prcslib package
+    """
+    Base exception class for the prcslib package.
     """
 
 class PrcsCommandError(PrcsError):
-    """Error from the PRCS command."""
+    """
+    Error from the PRCS command.
+    """
 
     def __init__(self, error_message):
-        """Construct a command error with an error message from PRCS."""
+        """
+        Construct a command error with an error message from PRCS.
+        """
         super(PrcsCommandError, self).__init__(self)
         self.error_message = error_message
 
 class PrcsVersion:
     """
-    Version identifier on PRCS
+    Version identifier on PRCS.
 
     A version identifier on PRCS is composed of major and minor parts separated
     by a full stop (U+002E). The former is a string, and the latter is a
@@ -67,7 +73,7 @@ class PrcsVersion:
 
     def __init__(self, major, minor=None):
         """
-        Construct a version identifier
+        Construct a version identifier.
         """
         if isinstance(major, PrcsVersion):
             if minor is None:
@@ -81,34 +87,145 @@ class PrcsVersion:
         self._minor = int(minor)
 
     def __str__(self):
+        """
+        Return the version identifier as a 'str' value.
+        """
         return self._major + "." + str(self._minor)
+
+    def __eq__(self, other):
+        """
+        Return 'true' if 'str(self)' == 'other'.
+        """
+        return str(self) == other
+
+    def __ne__(self, other):
+        """
+        Return 'false' if 'self' == 'other'.
+        """
+        equal = self.__eq__(other)
+        return not equal if not (equal is NotImplemented) else NotImplemented
+
+    def __hash__(self):
+        """
+        Return 'hash(str(self))'.
+        """
+        return hash(str(self))
 
     def major(self):
         """
-        Return the major part of the version identifier as a 'str' value
+        Return the major part of the version identifier as a 'str' value.
         """
         return self._major
 
     def minor(self):
         """
-        Return the minor part of the version identifier as an 'int' value
+        Return the minor part of the version identifier as an 'int' value.
         """
         return self._minor
 
+class PrcsVersionDescriptor:
+    """
+    Version descriptor on PRCS.
+    """
+
+    @staticmethod
+    def _readdescriptor(name):
+        with open(name, "r") as stream:
+            content = stream.read()
+
+        # Encloses the project descriptor in a single list.
+        data = sexpdata.loads("(\n" + content + "\n)")
+        properties = {
+            (i[0].value(), i[1:]) for i in data
+            if isinstance(i, list) and isinstance(i[0], sexpdata.Symbol)
+        }
+        return properties
+
+    def __init__(self, name):
+        self._properties = self._readdescriptor(name)
+
+    def version(self):
+        """
+        Return the version of the desciptor as a 'PrcsVersion' value.
+        """
+        version = self._properties["Project-Version"]
+        major = version[1].value()
+        minor = version[2].value()
+        return PrcsVersion(major, minor)
+
+    def parentversion(self):
+        """
+        Return 'self.parent()'.
+        """
+        return self.parent()
+
+    def parent(self):
+        """
+        Return the parent of the descriptor as a 'PrcsVersion' value.
+        """
+        version = self._properties["Parent-Version"]
+        major = version[1].value()
+        minor = version[2].value()
+        if major == "-*-" and minor == "-*-":
+            return None
+        return PrcsVersion(major, minor)
+
+    def mergeparents(self):
+        """
+        Return a 'list' value for the merge parents.
+        """
+        parents = []
+        for i in self._properties["Merge-Parents"]:
+            if i[1].value() == "complete":
+                parents.append(i[0].value())
+        return parents
+
+    def message(self):
+        """
+        Return the log message.
+        """
+        return self._properties["Version-Log"][0]
+
+    def files(self):
+        """
+        Return the file information as a dictionary.
+        """
+        files = {}
+        for i in self._properties["Files"]:
+            name = i[0].value()
+            symlink = False
+            for j in i[2:]:
+                if j.value() == ":symlink":
+                    symlink = True
+            if symlink:
+                files[name] = {
+                    "symlink": i[1][0].value(),
+                }
+            else:
+                files[name] = {
+                    "id": i[1][0].value(),
+                    "revision": i[1][1].value(),
+                    "mode": int(i[1][2].value(), 8),
+                }
+        return files
+
 class PrcsProject:
-    """project on PRCS
+    """
+    Project on PRCS.
     """
 
     def __init__(self, name):
-        """construct a Project object."""
+        """
+        Construct a Project object.
+        """
         self._command = "prcs"
-        self.name = name
+        self._name = name
 
     def versions(self):
         """
-        return a dictionary of the summary records for all the versions
+        Return a dictionary of the summary records for all the versions.
         """
-        out, err, status = self._run_prcs(["info", "-f", self.name])
+        out, err, status = self._run_prcs(["info", "-f", self._name])
         if status != 0:
             raise PrcsCommandError(err.decode())
 
@@ -130,20 +247,26 @@ class PrcsProject:
 
     def descriptor(self, version=None):
         """
-        return the project descriptor for a version
+        Return the descriptor for a version.
         """
-        return PrcsDescriptor(self, version)
+        name = self._name + ".prj"
+        self.checkout(version, files=[name])
+        try:
+            descriptor = PrcsVersionDescriptor(name)
+        finally:
+            os.unlink(name)
+        return descriptor
 
     def checkout(self, version=None, files=None):
         """
-        check out a version
+        Check out a version.
         """
         if files is None:
             files = []
         args = ["checkout", "-fqu"]
         if version is not None:
             args.extend(["-r", str(version)])
-        args.append(self.name)
+        args.append(self._name)
         args.extend(files)
         __, err, status = self._run_prcs(args)
         if status != 0:
@@ -151,7 +274,7 @@ class PrcsProject:
 
     def _run_prcs(self, args=None, stdin=None):
         """
-        run a PRCS command as a subprocess
+        Run a PRCS command as a subprocess.
         """
         if args is None:
             args = []
@@ -159,71 +282,3 @@ class PrcsProject:
             [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         out, err = prcs.communicate(stdin)
         return out, err, prcs.returncode
-
-class PrcsDescriptor:
-    """project descriptor on PRCS
-    """
-
-    def __init__(self, project, version=None):
-        prj_name = project.name + ".prj"
-        project.checkout(version, [prj_name])
-        self.properties = _readdescriptor(prj_name)
-        os.unlink(prj_name)
-
-    def version(self):
-        """Return the version in this descriptor."""
-        v = self.properties["Project-Version"]
-        return PrcsVersion(v[1].value(), v[2].value())
-
-    def parentversion(self):
-        """Return the major and minor parent versions."""
-        v = self.properties["Parent-Version"]
-        major = v[1].value()
-        minor = v[2].value()
-        if v[0].value() == "-*-" and major == "-*-" and minor == "-*-":
-            return None
-        return PrcsVersion(major, minor)
-
-    def mergeparents(self):
-        """Return the list of merge parents."""
-        p = []
-        for i in self.properties["Merge-Parents"]:
-            if i[1].value() == "complete":
-                p.append(i[0].value())
-        return p
-
-    def message(self):
-        """Return the log message."""
-        return self.properties["Version-Log"][0]
-
-    def files(self):
-        """Return the file information as a dictionary."""
-        files = {}
-        for i in self.properties["Files"]:
-            name = i[0].value()
-            symlink = False
-            for j in i[2:]:
-                if j.value() == ":symlink":
-                    symlink = True
-            if symlink:
-                files[name] = {
-                    "symlink": i[1][0].value(),
-                }
-            else:
-                files[name] = {
-                    "id": i[1][0].value(),
-                    "revision": i[1][1].value(),
-                    "mode": int(i[1][2].value(), 8),
-                }
-        return files
-
-def _readdescriptor(name):
-    with open(name, "r") as f:
-        string = f.read()
-
-    descriptor = {}
-    # Encloses the project descriptor in a single list.
-    for i in sexpdata.loads("(\n" + string + "\n)"):
-        if isinstance(i, list) and isinstance(i[0], sexpdata.Symbol):
-            descriptor[i[0].value()] = i[1:]
-    return descriptor
