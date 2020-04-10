@@ -219,13 +219,13 @@ class PrcsProject:
         Construct a Project object.
         """
         self._command = "prcs"
-        self.name = name
+        self._name = name
 
     def versions(self):
         """
         Return a dictionary of the summary records for all the versions.
         """
-        out, err, status = self._run_prcs(["info", "-f", self.name])
+        out, err, status = self._run_prcs(["info", "-f", self._name])
         if status != 0:
             raise PrcsCommandError(err.decode())
 
@@ -249,7 +249,7 @@ class PrcsProject:
         """
         Return the descriptor for a version.
         """
-        name = self.name + ".prj"
+        name = self._name + ".prj"
         self.checkout(version, files=[name])
         try:
             descriptor = PrcsVersionDescriptor(name)
@@ -266,7 +266,7 @@ class PrcsProject:
         args = ["checkout", "-fqu"]
         if version is not None:
             args.extend(["-r", str(version)])
-        args.append(self.name)
+        args.append(self._name)
         args.extend(files)
         __, err, status = self._run_prcs(args)
         if status != 0:
