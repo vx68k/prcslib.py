@@ -128,8 +128,21 @@ class PrcsDescriptor:
     Version descriptor on PRCS.
     """
 
+    @staticmethod
+    def _readdescriptor(name):
+        with open(name, "r") as stream:
+            content = stream.read()
+
+        # Encloses the project descriptor in a single list.
+        data = sexpdata.loads("(\n" + content + "\n)")
+        properties = {
+            (i[0].value(), i[1:]) for i in data
+            if isinstance(i, list) and isinstance(i[0], sexpdata.Symbol)
+        }
+        return properties
+
     def __init__(self, name):
-        self.properties = _readdescriptor(name)
+        self.properties = self._readdescriptor(name)
 
     def version(self):
         """
@@ -261,14 +274,3 @@ class PrcsProject:
             [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         out, err = prcs.communicate(stdin)
         return out, err, prcs.returncode
-
-def _readdescriptor(name):
-    with open(name, "r") as f:
-        string = f.read()
-
-    descriptor = {}
-    # Encloses the project descriptor in a single list.
-    for i in sexpdata.loads("(\n" + string + "\n)"):
-        if isinstance(i, list) and isinstance(i[0], sexpdata.Symbol):
-            descriptor[i[0].value()] = i[1:]
-    return descriptor
