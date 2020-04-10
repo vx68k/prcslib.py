@@ -146,7 +146,7 @@ class PrcsVersionDescriptor:
 
     def version(self):
         """
-        Return the version of the desciptor.
+        Return the version of the desciptor as a 'PrcsVersion' value.
         """
         version = self._properties["Project-Version"]
         major = version[1].value()
