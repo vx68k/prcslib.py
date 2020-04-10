@@ -123,7 +123,7 @@ class PrcsVersion:
         """
         return self._minor
 
-class PrcsDescriptor:
+class PrcsVersionDescriptor:
     """
     Version descriptor on PRCS.
     """
@@ -244,7 +244,7 @@ class PrcsProject:
         name = self.name + ".prj"
         self.checkout(version, files=[name])
         try:
-            descriptor = PrcsDescriptor(name)
+            descriptor = PrcsVersionDescriptor(name)
         finally:
             os.unlink(name)
         return descriptor
