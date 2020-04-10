@@ -142,20 +142,20 @@ class PrcsDescriptor:
         return properties
 
     def __init__(self, name):
-        self.properties = self._readdescriptor(name)
+        self._properties = self._readdescriptor(name)
 
     def version(self):
         """
         Return the version in this descriptor.
         """
-        v = self.properties["Project-Version"]
+        v = self._properties["Project-Version"]
         return PrcsVersion(v[1].value(), v[2].value())
 
     def parentversion(self):
         """
         Return the major and minor parent versions.
         """
-        v = self.properties["Parent-Version"]
+        v = self._properties["Parent-Version"]
         major = v[1].value()
         minor = v[2].value()
         if v[0].value() == "-*-" and major == "-*-" and minor == "-*-":
@@ -167,7 +167,7 @@ class PrcsDescriptor:
         Return a 'list' value for the merge parents.
         """
         parents = []
-        for i in self.properties["Merge-Parents"]:
+        for i in self._properties["Merge-Parents"]:
             if i[1].value() == "complete":
                 parents.append(i[0].value())
         return parents
@@ -176,14 +176,14 @@ class PrcsDescriptor:
         """
         Return the log message.
         """
-        return self.properties["Version-Log"][0]
+        return self._properties["Version-Log"][0]
 
     def files(self):
         """
         Return the file information as a dictionary.
         """
         files = {}
-        for i in self.properties["Files"]:
+        for i in self._properties["Files"]:
             name = i[0].value()
             symlink = False
             for j in i[2:]:
