@@ -125,14 +125,11 @@ class PrcsVersion:
 
 class PrcsDescriptor:
     """
-    Project descriptor on PRCS.
+    Version descriptor on PRCS.
     """
 
-    def __init__(self, project, version=None):
-        prj_name = project.name + ".prj"
-        project.checkout(version, files=[prj_name])
-        self.properties = _readdescriptor(prj_name)
-        os.unlink(prj_name)
+    def __init__(self, name):
+        self.properties = _readdescriptor(name)
 
     def version(self):
         """
@@ -229,9 +226,15 @@ class PrcsProject:
 
     def descriptor(self, version=None):
         """
-        Return the project descriptor for a version.
+        Return the descriptor for a version.
         """
-        return PrcsDescriptor(self, version)
+        name = self.name + ".prj"
+        self.checkout(version, files=[name])
+        try:
+            descriptor = PrcsDescriptor(name)
+        finally:
+            os.unlink(name)
+        return descriptor
 
     def checkout(self, version=None, files=None):
         """
