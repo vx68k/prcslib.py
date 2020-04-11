@@ -30,9 +30,9 @@ which works on a set of files at once.
 """
 
 from __future__ import absolute_import, unicode_literals
-import sys
+
 import re
-import os
+from os import unlink
 from datetime import datetime
 from email.utils import parsedate
 from subprocess import Popen, PIPE
@@ -254,7 +254,7 @@ class PrcsProject:
         try:
             descriptor = PrcsVersionDescriptor(name)
         finally:
-            os.unlink(name)
+            unlink(name)
         return descriptor
 
     def checkout(self, version=None, files=None):
