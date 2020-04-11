@@ -1,7 +1,8 @@
 syntax: regexp
-(^|/)nbproject/private$
 (^|/)dist$
 (^|/)build$
+(^|/)\.tox$
+(^|/)\.eggs$
 \.egg-info$
 \.pyc$
 \.rej$

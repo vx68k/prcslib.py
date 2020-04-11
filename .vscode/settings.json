@@ -1,7 +1,17 @@
 {
     "files.exclude": {
+        "**/.tox": true,
+        "**/.eggs": true,
+        "**/*.egg-info": true,
+        "**/__pycache__": true,
+        "**/*.pyc": true,
         "**/*.rej": true,
         "**/*.orig": true,
         "**/*~": true
-    }
+    },
+    "python.testing.unittestEnabled": true,
+    "python.testing.unittestArgs": [
+        "-s",
+        "test"
+    ]
 }

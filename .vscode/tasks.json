@@ -2,33 +2,30 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "Build",
             "type": "process",
             "command": "${config:python.pythonPath}",
             "args": [
                 "./setup.py",
                 "build"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build",
+            "problemMatcher": []
         },
         {
-            "label": "test",
+            "label": "Rebuild",
             "type": "process",
             "command": "${config:python.pythonPath}",
             "args": [
                 "./setup.py",
-                "test"
+                "clean",
+                "build"
             ],
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
+            "group": "build",
+            "problemMatcher": []
         },
         {
-            "label": "clean",
+            "label": "Clean",
             "type": "process",
             "command": "${config:python.pythonPath}",
             "args": [

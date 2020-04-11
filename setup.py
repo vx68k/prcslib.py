@@ -1,5 +1,5 @@
-# setup - setup script for the prcslib package
-# Copyright (C) 2019 Kaz Nishimura
+# setup.py - setup script for the 'prcslib' package
+# Copyright (C) 2019-2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to
@@ -21,46 +21,43 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""setup script for the prcslib package
+"""
+setup script for the 'prcslib' package
 """
 
+from __future__ import absolute_import
 from os import path
 from setuptools import setup, find_packages
 
-# Set this to 'True' if the current version is a snapshot.
-_SNAPSHOT = True
+# Package name.
+PACKAGE_NAME = "prcslib"
 
-def _version_suffix():
-    """return the version suffix
-
-    This method returns a string to be appended to the package version,
-    or "" if none needed.
-    """
-    value = "b3"
-    if _SNAPSHOT:
-        from datetime import datetime
-        timestamp = datetime.utcnow()
-        value = timestamp.strftime(".dev%Y%m%d%H%M%S")
-    return value
+# Package version.
+PACKAGE_VERSION = "5.0"
 
 def long_description():
-    """return the long description from the 'README.md' file
+    """
+    return the long description from the 'README.md' file
     """
     cwd = path.abspath(path.dirname(__file__))
-    with open(path.join(cwd, "README.md"), encoding="UTF-8") as file:
+    with open(path.join(cwd, "README.md")) as stream:
         # To ignore lines until a level-1 ATX header is found.
         while True:
-            line = file.readline()
+            line = stream.readline()
             if line.startswith("# "):
                 break
-        return line + file.read()
+        return line + stream.read()
 
 if __name__ == "__main__":
     setup(
-        name="prcslib",
-        version="1.0" + _version_suffix(),
+        name=PACKAGE_NAME,
+        version=PACKAGE_VERSION,
         description="Python API for PRCS.",
         url="https://vx68k.bitbucket.io/prcslib.py/",
+        project_urls={
+            # Libraries.io will pick the 'Source' location for the repository.
+            "Source": "https://github.com/vx68k/prcslib.py",
+        },
         author="Kaz Nishimura",
         author_email="kazssym@linuxfront.com",
         long_description=long_description(),
@@ -68,10 +65,14 @@ if __name__ == "__main__":
         classifiers=[
             "License :: OSI Approved :: MIT License",
             "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 2.7",
+            "Topic :: Software Development :: Version Control",
         ],
-        obsoletes=["prcs2hg (< 2.0)"],
-        python_requires=">= 3.4",
+        obsoletes=[
+            "prcs2hg(<2.0)",
+        ],
+        python_requires=">=2.7",
+        zip_safe=True,
 
-        packages=find_packages(exclude=["testsuite", "testsuite.*"]),
-        test_suite="testsuite",
+        packages=find_packages(exclude=["test", "test.*"]),
     )

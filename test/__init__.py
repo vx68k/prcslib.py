@@ -1,5 +1,5 @@
-# testsuite - test suite for the prcslib package
-# Copyright (C) 2019 Kaz Nishimura
+# __init__.py - initialization of the test suite package
+# Copyright (C) 2020 Kaz Nishimura
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to
@@ -21,5 +21,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""test suite for the prcslib package
 """
+test suite package
+"""
+
+from __future__ import absolute_import, unicode_literals
+from .test_version import *
