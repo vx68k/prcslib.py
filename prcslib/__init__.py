@@ -136,7 +136,7 @@ class PrcsVersionDescriptor:
         # Encloses the project descriptor in a single list.
         data = sexpdata.loads("(\n" + content + "\n)")
         properties = {
-            (i[0].value(), i[1:]) for i in data
+            i[0].value(): i[1:] for i in data
             if isinstance(i, list) and isinstance(i[0], sexpdata.Symbol)
         }
         return properties
