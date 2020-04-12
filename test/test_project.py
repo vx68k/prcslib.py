@@ -27,7 +27,7 @@ unit tests for the 'PrcsProject' class
 
 from __future__ import absolute_import, unicode_literals
 from unittest import TestCase
-from prcslib import PrcsProject
+from prcslib import PrcsProject, PrcsVersionDescriptor
 
 # PRCS project name for tests.
 PRCS_PROJECT_NAME = "testproject"
@@ -49,3 +49,11 @@ class ProjectTests(TestCase):
         """
         versions = self._project.versions()
         self.assertTrue("0.1" in versions)
+
+    def test_descriptor(self):
+        """
+        Test the 'descriptor' method.
+        """
+        descriptor = self._project.descriptor("0.1")
+        self.assertTrue(isinstance(descriptor, PrcsVersionDescriptor))
+        self.assertEqual("0.1", descriptor.version())
