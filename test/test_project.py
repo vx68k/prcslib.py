@@ -39,13 +39,13 @@ class ProjectTests(TestCase):
 
     def setUp(self):
         """
-        Set up a test case
+        Set up a test case.
         """
         self._project = PrcsProject(PRCS_PROJECT_NAME)
 
     def test_versions(self):
         """
-        Test the 'versions' function
+        Test the 'versions' method.
         """
         versions = self._project.versions()
         self.assertTrue("0.1" in versions)
