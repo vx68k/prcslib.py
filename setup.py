@@ -26,6 +26,7 @@ setup script for the 'prcslib' package
 """
 
 from __future__ import absolute_import
+
 from os import path
 from setuptools import setup, find_packages
 
