@@ -34,7 +34,7 @@ from setuptools import setup, find_packages
 PACKAGE_NAME = "prcslib"
 
 # Package version.
-PACKAGE_VERSION = "5.0"
+PACKAGE_VERSION = "5.0.0"
 
 def long_description():
     """
