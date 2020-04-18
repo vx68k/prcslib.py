@@ -32,7 +32,7 @@ from os import system
 
 def main():
     """
-    Prepare a PRCS project by extracting from a package
+    Prepare a PRCS project by extracting from a package.
     """
     package = argv[1]
     return system("base64 -d '%s' | prcs unpackage -f -" % package)
