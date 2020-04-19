@@ -22,7 +22,7 @@ stages:
                   "setuptools>=38.6" \
                   unittest-xml-reporting \
                   wheel
-            displayName: Install dependencies
+            displayName: Install build dependencies
           - bash: |
               pip install .
             displayName: Install
@@ -55,8 +55,9 @@ stages:
             artifact: dist
           - task: UsePythonVersion@0
           - bash: |
-              pip install twine
-            displayName: Install dependencies
+              pip install \
+                  twine
+            displayName: Install upload dependencies
           - task: TwineAuthenticate@1
             inputs:
               pythonUploadServiceConnection: pypi
