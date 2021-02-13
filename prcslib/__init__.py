@@ -274,13 +274,13 @@ class PrcsProject:
         if status != 0:
             raise PrcsCommandError(err.decode())
 
-    def _run_prcs(self, args=None, stdin=None):
+    def _run_prcs(self, args=None, stdin=None, cwd=None):
         """
         Run a PRCS command as a subprocess.
         """
         if args is None:
             args = []
-        prcs = Popen(
-            [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        prcs = Popen([self._command] + args,
+            stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=cwd)
         out, err = prcs.communicate(stdin)
         return out, err, prcs.returncode
