@@ -26,4 +26,5 @@ test suite package
 """
 
 from __future__ import absolute_import, unicode_literals
+
 from .test_version import *

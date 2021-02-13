@@ -30,9 +30,9 @@ which works on a set of files at once.
 """
 
 from __future__ import absolute_import, unicode_literals
-import sys
+
 import re
-import os
+from os import unlink
 from datetime import datetime
 from email.utils import parsedate
 from subprocess import Popen, PIPE
@@ -136,7 +136,7 @@ class PrcsVersionDescriptor:
         # Encloses the project descriptor in a single list.
         data = sexpdata.loads("(\n" + content + "\n)")
         properties = {
-            (i[0].value(), i[1:]) for i in data
+            i[0].value(): i[1:] for i in data
             if isinstance(i, list) and isinstance(i[0], sexpdata.Symbol)
         }
         return properties
@@ -162,6 +162,8 @@ class PrcsVersionDescriptor:
     def parent(self):
         """
         Return the parent of the descriptor as a 'PrcsVersion' value.
+
+        This method has been available since 4.0.
         """
         version = self._properties["Parent-Version"]
         major = version[1].value()
@@ -254,7 +256,7 @@ class PrcsProject:
         try:
             descriptor = PrcsVersionDescriptor(name)
         finally:
-            os.unlink(name)
+            unlink(name)
         return descriptor
 
     def checkout(self, version=None, files=None):
@@ -272,13 +274,13 @@ class PrcsProject:
         if status != 0:
             raise PrcsCommandError(err.decode())
 
-    def _run_prcs(self, args=None, stdin=None):
+    def _run_prcs(self, args=None, stdin=None, cwd=None):
         """
         Run a PRCS command as a subprocess.
         """
         if args is None:
             args = []
-        prcs = Popen(
-            [self._command] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        prcs = Popen([self._command] + args,
+            stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=cwd)
         out, err = prcs.communicate(stdin)
         return out, err, prcs.returncode

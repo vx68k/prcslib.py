@@ -26,6 +26,7 @@ setup script for the 'prcslib' package
 """
 
 from __future__ import absolute_import
+
 from os import path
 from setuptools import setup, find_packages
 
@@ -33,7 +34,7 @@ from setuptools import setup, find_packages
 PACKAGE_NAME = "prcslib"
 
 # Package version.
-PACKAGE_VERSION = "5.0"
+PACKAGE_VERSION = "5.0.0"
 
 def long_description():
     """

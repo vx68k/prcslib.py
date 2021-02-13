@@ -26,15 +26,16 @@ prepare a PRCS project for tests
 """
 
 from __future__ import absolute_import
-import sys
-import os
+
+from sys import argv, exit
+from os import system
 
 def main():
     """
-    Prepare a PRCS project by extracting from a package
+    Prepare a PRCS project by extracting from a package.
     """
-    package = sys.argv[1]
-    return os.system("base64 -d '%s' | prcs unpackage -f -" % package)
+    package = argv[1]
+    return system("base64 -d '%s' | prcs unpackage -f -" % package)
 
 if __name__ == "__main__":
-    sys.exit(main() != 0)
+    exit(main() != 0)
