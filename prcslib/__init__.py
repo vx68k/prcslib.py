@@ -259,7 +259,7 @@ class PrcsProject:
             unlink(name)
         return descriptor
 
-    def checkout(self, version=None, files=None):
+    def checkout(self, version=None, files=None, cwd=None):
         """
         Check out a version.
         """
@@ -270,7 +270,7 @@ class PrcsProject:
             args.extend(["-r", str(version)])
         args.append(self._name)
         args.extend(files)
-        __, err, status = self._run_prcs(args)
+        __, err, status = self._run_prcs(args, cwd=cwd)
         if status != 0:
             raise PrcsCommandError(err.decode())
 
