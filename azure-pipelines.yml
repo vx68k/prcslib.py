@@ -14,7 +14,7 @@ stages:
     jobs:
       - job: Build
         pool:
-          vmImage: ubuntu-16.04
+          vmImage: ubuntu-18.04
         container: kazssym/python-prcs:3
         steps:
           - bash: |
